@@ -12,5 +12,4 @@ interface CategoryRepositoryInterface
     public function paginate(string $filter = '', $order = 'DESC', int $page = 1, int $totalPage = 15): PaginationInterface;
     public function update(Category $category): Category;
     public function delete(string $categoryId): bool;
-    public function toCategory(object $data): Category;
 }
