@@ -3,47 +3,81 @@
 namespace App\Repositories\Presenters;
 
 use Core\Domain\Repository\PaginationInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use stdClass;
 
 class PaginationPresenter implements PaginationInterface
 {
+    /**
+     * @return stdClass[]
+     */
+    protected array $items = [];
+
+    public function __construct(
+        protected LengthAwarePaginator $paginator
+    ) {
+        $this->items = $this->resolveItems(
+            items: $this->paginator->items()
+        );
+    }
+
+    /**
+     * @return stdClass[]
+     */
     public function items(): array
     {
-        return [];
+        return $this->items;
     }
 
     public function total(): int
     {
-        return 1;
+        return $this->paginator->total();
     }
 
     public function lastPage(): int
     {
-        return 1;
+        return $this->paginator->lastPage();
     }
 
     public function firstPage(): int
     {
-        return 1;
+        return $this->paginator->firstItem();
     }
 
     public function currentPage(): int
     {
-        return 1;
+        return $this->paginator->currentPage();
     }
 
     public function perPage(): int
     {
-        return 1;
+        return $this->paginator->perPage();
     }
 
     public function to(): int
     {
-        return 1;
+        return $this->paginator->firstItem();
     }
 
     public function from(): int
     {
-        return 1;
+        return $this->paginator->lastItem();
+    }
+
+    private function resolveItems(array $items): array
+    {
+        $response = [];
+
+        foreach ($items as $item) {
+            $stdClass = new stdClass;
+            foreach ($item->toArray() as $key => $value) {
+                $stdClass->{$key} = $value;
+            }
+
+            array_push($response, $stdClass);
+        }
+
+        return $response;
     }
 
 }
