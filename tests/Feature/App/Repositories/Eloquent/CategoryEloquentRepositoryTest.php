@@ -78,4 +78,12 @@ class CategoryEloquentRepositoryTest extends TestCase
         $this->assertInstanceOf(PaginationInterface::class, $response);
         $this->assertCount(15, $response->items());
     }
+
+    public function testPaginateWithout()
+    {
+        $response = $this->repository->paginate();
+
+        $this->assertInstanceOf(PaginationInterface::class, $response);
+        $this->assertCount(0, $response->items());
+    }
 }
