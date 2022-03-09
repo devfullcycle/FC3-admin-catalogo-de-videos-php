@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Category as Model;
 use App\Repositories\Presenters\PaginationPresenter;
 use Core\Domain\Entity\Category;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\CategoryRepositoryInterface;
 use Core\Domain\Repository\PaginationInterface;
 
@@ -32,9 +33,11 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
 
     public function findById(string $categoryId): Category
     {
-        return new Category(
-            name: 'sdfs',
-        );
+        if (!$category = $this->model->find($categoryId)) {
+            throw new NotFoundException();
+        }
+
+        return $this->toCategory($category);
     }
 
     public function findAll(string $filter = '', $order = 'DESC'): array
@@ -62,6 +65,7 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
     private function toCategory(object $object): Category
     {
         return new Category(
+            id: $object->id,
             name: $object->name,
         );
     }
