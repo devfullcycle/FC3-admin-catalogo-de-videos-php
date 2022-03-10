@@ -31,37 +31,37 @@ class PaginationPresenter implements PaginationInterface
 
     public function total(): int
     {
-        return $this->paginator->total();
+        return $this->paginator->total() ?? 0;
     }
 
     public function lastPage(): int
     {
-        return $this->paginator->lastPage();
+        return $this->paginator->lastPage() ?? 0;
     }
 
     public function firstPage(): int
     {
-        return $this->paginator->firstItem();
+        return $this->paginator->firstItem() ?? 0;
     }
 
     public function currentPage(): int
     {
-        return $this->paginator->currentPage();
+        return $this->paginator->currentPage() ?? 0;
     }
 
     public function perPage(): int
     {
-        return $this->paginator->perPage();
+        return $this->paginator->perPage() ?? 0;
     }
 
     public function to(): int
     {
-        return $this->paginator->firstItem();
+        return $this->paginator->firstItem() ?? 0;
     }
 
     public function from(): int
     {
-        return $this->paginator->lastItem();
+        return $this->paginator->lastItem() ?? 0;
     }
 
     private function resolveItems(array $items): array
