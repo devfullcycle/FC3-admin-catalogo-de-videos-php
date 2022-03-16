@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Repositories\Eloquent\CategoryEloquentRepository;
 use Core\UseCase\Category\{
     CreateCategoryUseCase,
+    DeleteCategoryUseCase,
     ListCategoriesUseCase,
     ListCategoryUseCase,
     UpdateCategoryUseCase
@@ -100,5 +101,17 @@ class CategoryControllerTest extends TestCase
         $this->assertDatabaseHas('categories', [
             'name' => 'Updated'
         ]);
+    }
+
+    public function test_delete()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->controller->destroy(
+            useCase: new DeleteCategoryUseCase($this->repository),
+            id: $category->id
+        );
+
+        $this->assertEquals(Response::HTTP_NO_CONTENT, $response->status());
     }
 }
