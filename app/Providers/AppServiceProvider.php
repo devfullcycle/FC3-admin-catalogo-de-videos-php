@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Eloquent\{
+    CategoryEloquentRepository
+};
+use Core\Domain\Repository\CategoryRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +17,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(
+            CategoryRepositoryInterface::class,
+            CategoryEloquentRepository::class
+        );
     }
 
     /**
