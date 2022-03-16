@@ -34,7 +34,7 @@ class CategoryEloquentRepository implements CategoryRepositoryInterface
     public function findById(string $categoryId): Category
     {
         if (!$category = $this->model->find($categoryId)) {
-            throw new NotFoundException();
+            throw new NotFoundException('Category Not Found');
         }
 
         return $this->toCategory($category);
