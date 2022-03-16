@@ -8,7 +8,8 @@ use App\Models\Category;
 use App\Repositories\Eloquent\CategoryEloquentRepository;
 use Core\UseCase\Category\{
     CreateCategoryUseCase,
-    ListCategoriesUseCase
+    ListCategoriesUseCase,
+    ListCategoryUseCase
 };
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -59,5 +60,18 @@ class CategoryControllerTest extends TestCase
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals(Response::HTTP_CREATED, $response->status());
+    }
+
+    public function test_show()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->controller->show(
+            useCase: new ListCategoryUseCase($this->repository),
+            id: $category->id,
+        );
+        
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->status());
     }
 }
