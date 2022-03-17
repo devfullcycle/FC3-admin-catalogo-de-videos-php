@@ -80,7 +80,7 @@ class CategoryController extends Controller
             )
         );
 
-        return (new CategoryResource(collect($response)))
+        return (new CategoryResource($response))
                     ->response();
     }
 
