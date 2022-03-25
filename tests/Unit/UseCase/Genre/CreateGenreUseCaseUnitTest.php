@@ -30,6 +30,15 @@ class CreateGenreUseCaseUnitTest extends TestCase
         $response = $useCase->execute($this->mockCreateInputDto([$uuid]));
 
         $this->assertInstanceOf(GenreCreateOutputDto::class, $response);
+
+        /**
+         * Spies
+         */
+        $this->spy = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
+        $this->spy->shouldReceive('insert')->andReturn($this->mockEntity($uuid));
+        $useCase = new CreateGenreUseCase($this->spy, $this->mockTransaction(), $this->mockCategoryRepository($uuid));
+        $response = $useCase->execute($this->mockCreateInputDto([$uuid]));
+        $this->spy->shouldHaveReceived('insert');
     }
 
     public function test_create_categories_notfound()

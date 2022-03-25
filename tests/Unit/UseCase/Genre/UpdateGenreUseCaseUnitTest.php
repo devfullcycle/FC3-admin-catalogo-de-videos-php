@@ -30,6 +30,17 @@ class UpdateGenreUseCaseUnitTest extends TestCase
         $response = $useCase->execute($this->mockUpdateInputDto($uuid, [$uuid]));
 
         $this->assertInstanceOf(GenreUpdateOutputDto::class, $response);
+
+        /**
+         * Spies
+         */
+        $this->spy = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
+        $this->spy->shouldReceive('findById')->andReturn($this->mockEntity($uuid));
+        $this->spy->shouldReceive('update')->andReturn($this->mockEntity($uuid));
+        $useCase = new UpdateGenreUseCase($this->spy, $this->mockTransaction(), $this->mockCategoryRepository($uuid));
+        $useCase->execute($this->mockUpdateInputDto($uuid, [$uuid]));
+        $this->spy->shouldHaveReceived('findById');
+        $this->spy->shouldHaveReceived('update');
     }
 
     public function test_update_categories_notfound()

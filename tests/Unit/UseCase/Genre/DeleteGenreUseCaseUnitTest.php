@@ -30,6 +30,15 @@ class DeleteGenreUseCaseUnitTest extends TestCase
 
         $this->assertInstanceOf(DeleteGenreOutputDto::class, $response);
         $this->assertTrue($response->success);
+
+        /**
+         * Spies
+         */
+        $this->spy = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
+        $this->spy->shouldReceive('delete')->andReturn(true);
+        $useCase = new DeleteGenreUseCase($this->spy);
+        $useCase->execute($mockInputDto);
+        $this->spy->shouldHaveReceived('delete');
     }
 
     public function test_delete_fail()

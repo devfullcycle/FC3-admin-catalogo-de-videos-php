@@ -37,6 +37,15 @@ class ListGenreUseCaseUnitTest extends TestCase
 
         $this->assertInstanceOf(GenreOutputDto::class, $response);
 
+        /**
+         * Spies
+         */
+        $this->spy = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
+        $this->spy->shouldReceive('findById')->andReturn($mockEntity);
+        $useCase = new ListGenreUseCase($this->spy);
+        $response = $useCase->execute($mockInputDto);
+        $this->spy->shouldHaveReceived('findById');
+
         Mockery::close();
     }
 }
