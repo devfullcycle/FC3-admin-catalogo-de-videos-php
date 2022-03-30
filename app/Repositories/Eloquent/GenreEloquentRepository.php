@@ -6,6 +6,8 @@ use App\Models\Genre as Model;
 use Core\Domain\Entity\Genre as Entity;
 use Core\Domain\Repository\GenreRepositoryInterface;
 use Core\Domain\Repository\PaginationInterface;
+use Core\Domain\ValueObject\Uuid;
+use DateTime;
 
 class GenreEloquentRepository implements GenreRepositoryInterface
 {
@@ -18,7 +20,14 @@ class GenreEloquentRepository implements GenreRepositoryInterface
 
     public function insert(Entity $genre): Entity
     {
+        $register = $this->model->create([
+            'id' => $genre->id(),
+            'name' => $genre->name,
+            'is_active' => $genre->isActive,
+            'created_at' => $genre->createdAt(),
+        ]);
 
+        return $this->toGenre($register);
     }
     
     public function findById(string $genreId): Entity
@@ -44,5 +53,17 @@ class GenreEloquentRepository implements GenreRepositoryInterface
     public function delete(string $genreId): bool
     {
 
+    }
+
+    private function toGenre(object $object): Entity
+    {
+        $entity = new Entity(
+            id: new Uuid($object->id),
+            name: $object->name,
+            createdAt: new DateTime($object->created_at),
+        );
+        ((bool) $object->is_active) ? $entity->activate() : $entity->deactivate();
+
+        return $entity;
     }
 }
