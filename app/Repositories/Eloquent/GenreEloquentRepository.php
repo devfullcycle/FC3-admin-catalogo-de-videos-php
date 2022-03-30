@@ -20,14 +20,18 @@ class GenreEloquentRepository implements GenreRepositoryInterface
 
     public function insert(Entity $genre): Entity
     {
-        $register = $this->model->create([
+        $genreDb = $this->model->create([
             'id' => $genre->id(),
             'name' => $genre->name,
             'is_active' => $genre->isActive,
             'created_at' => $genre->createdAt(),
         ]);
 
-        return $this->toGenre($register);
+        if (count($genre->categoriesId) > 0) {
+            $genreDb->categories()->sync($genre->categoriesId);
+        }
+
+        return $this->toGenre($genreDb);
     }
     
     public function findById(string $genreId): Entity
