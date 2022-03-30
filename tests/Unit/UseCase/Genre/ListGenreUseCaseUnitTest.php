@@ -26,7 +26,7 @@ class ListGenreUseCaseUnitTest extends TestCase
         $mockEntity->shouldReceive('createdAt')->andReturn(date('Y-m-d H:i:s'));
 
         $mockRepository = Mockery::mock(stdClass::class, GenreRepositoryInterface::class);
-        $mockRepository->shouldReceive('findById')->andReturn($mockEntity);
+        $mockRepository->shouldReceive('findById')->once()->with($uuid)->andReturn($mockEntity);
 
         $mockInputDto = Mockery::mock(GenreInputDto::class, [
             $uuid
@@ -36,15 +36,6 @@ class ListGenreUseCaseUnitTest extends TestCase
         $response = $useCase->execute($mockInputDto);
 
         $this->assertInstanceOf(GenreOutputDto::class, $response);
-
-        /**
-         * Spies
-         */
-        $this->spy = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
-        $this->spy->shouldReceive('findById')->andReturn($mockEntity);
-        $useCase = new ListGenreUseCase($this->spy);
-        $response = $useCase->execute($mockInputDto);
-        $this->spy->shouldHaveReceived('findById');
 
         Mockery::close();
     }
