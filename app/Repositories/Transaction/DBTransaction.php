@@ -5,7 +5,7 @@ namespace App\Repositories\Transaction;
 use Core\UseCase\Interfaces\TransactionInterface;
 use Illuminate\Support\Facades\DB;
 
-class DBTransation implements TransactionInterface
+class DBTransaction implements TransactionInterface
 {
     public function __construct()
     {
