@@ -14,6 +14,7 @@ use Core\UseCase\DTO\Genre\List\{
 use Core\UseCase\DTO\Genre\Update\GenreUpdateInputDto;
 use Core\UseCase\Genre\{
     CreateGenreUseCase,
+    DeleteGenreUseCase,
     ListGenresUseCase,
     ListGenreUseCase,
     UpdateGenreUseCase
@@ -117,8 +118,10 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DeleteGenreUseCase $useCase, $id)
     {
-        //
+        $useCase->execute(new GenreInputDto($id));
+
+        return response()->noContent();
     }
 }

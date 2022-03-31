@@ -118,6 +118,22 @@ class GenreApiTest extends TestCase
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
+    public function testValidationsUpdate()
+    {
+        $response = $this->putJson("{$this->endpoint}/fake_value", [
+            'name' => 'New Name to Update',
+            'categories_ids' => []
+        ]);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'categories_ids'
+            ]
+        ]);
+    }
+
     public function testUpdate()
     {
         $genre = Model::factory()->create();
@@ -136,5 +152,21 @@ class GenreApiTest extends TestCase
                 'is_active'
             ]
         ]);
+    }
+
+    public function testDeleteNotFound()
+    {
+        $response = $this->deleteJson("{$this->endpoint}/fake_id");
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testDelete()
+    {
+        $genre = Model::factory()->create();
+
+        $response = $this->deleteJson("{$this->endpoint}/{$genre->id}");
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 }
