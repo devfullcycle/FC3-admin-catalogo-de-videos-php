@@ -120,4 +120,22 @@ class GenreEloquentRepositoryTest extends TestCase
         $genresDb = $this->repository->findAll();
         $this->assertEquals(20, count($genresDb));
     }
+
+    public function testPagination()
+    {
+        Model::factory()->count(60)->create();
+
+        $response = $this->repository->paginate();
+
+        $this->assertEquals(15, count($response->items()));
+        $this->assertEquals(60, $response->total());
+    }
+
+    public function testPaginationEmpty()
+    {
+        $response = $this->repository->paginate();
+
+        $this->assertCount(0, $response->items());
+        $this->assertEquals(0, $response->total());
+    }
 }
