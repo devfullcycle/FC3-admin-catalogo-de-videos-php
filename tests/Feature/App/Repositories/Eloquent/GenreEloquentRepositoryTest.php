@@ -8,6 +8,9 @@ use App\Repositories\Eloquent\GenreEloquentRepository;
 use Core\Domain\Entity\Genre as EntityGenre;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\GenreRepositoryInterface;
+use Core\Domain\ValueObject\Uuid;
+use DateTime;
+use Ramsey\Uuid\Uuid as RamseyUuid;
 use Tests\TestCase;
 
 class GenreEloquentRepositoryTest extends TestCase
@@ -137,5 +140,49 @@ class GenreEloquentRepositoryTest extends TestCase
 
         $this->assertCount(0, $response->items());
         $this->assertEquals(0, $response->total());
+    }
+
+    public function testUpdate()
+    {
+        $genre = Model::factory()->create();
+
+        $entity = new EntityGenre(
+            id: new Uuid($genre->id),
+            name: $genre->name,
+            isActive: (bool) $genre->is_active,
+            createdAt: new DateTime($genre->created_at)
+        );
+
+        $entity->update(
+            name: 'Name Updated'
+        );
+
+        $response = $this->repository->update($entity);
+
+        $this->assertEquals('Name Updated', $response->name);
+
+        $this->assertDatabaseHas('genres', [
+            'name' => 'Name Updated'
+        ]);
+    }
+
+    public function testUpdateNotFound()
+    {
+        $this->expectException(NotFoundException::class);
+
+        $genreId = (string) RamseyUuid::uuid4();
+
+        $entity = new EntityGenre(
+            id: new Uuid($genreId),
+            name: 'name',
+            isActive: true,
+            createdAt: new DateTime(date('Y-m-d H:i:s'))
+        );
+
+        $entity->update(
+            name: 'Name Updated'
+        );
+
+        $this->repository->update($entity);
     }
 }
