@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Genre as Model;
 use Core\Domain\Entity\Genre as Entity;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\GenreRepositoryInterface;
 use Core\Domain\Repository\PaginationInterface;
 use Core\Domain\ValueObject\Uuid;
@@ -36,7 +37,10 @@ class GenreEloquentRepository implements GenreRepositoryInterface
     
     public function findById(string $genreId): Entity
     {
-
+        if (!$genreDb = $this->model->find($genreId)) {
+            throw new NotFoundException("Genre {$genreId} not found");
+        }
+        return $this->toGenre($genreDb);
     }
     
     public function findAll(string $filter = '', $order = 'DESC'): array
@@ -59,7 +63,7 @@ class GenreEloquentRepository implements GenreRepositoryInterface
 
     }
 
-    private function toGenre(object $object): Entity
+    private function toGenre(Model $object): Entity
     {
         $entity = new Entity(
             id: new Uuid($object->id),

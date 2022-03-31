@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Genre as Model;
 use App\Repositories\Eloquent\GenreEloquentRepository;
 use Core\Domain\Entity\Genre as EntityGenre;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\GenreRepositoryInterface;
 use Tests\TestCase;
 
@@ -67,5 +68,24 @@ class GenreEloquentRepositoryTest extends TestCase
         ]);
 
         $this->assertDatabaseCount('category_genre', 4);
+    }
+
+    public function testNotFoundById()
+    {
+        $this->expectException(NotFoundException::class);
+
+        $genre = 'fake_value';
+
+        $this->repository->findById($genre);
+    }
+
+    public function testFindById()
+    {
+        $genre = Model::factory()->create();
+
+        $response = $this->repository->findById($genre->id);
+
+        $this->assertEquals($genre->id, $response->id());
+        $this->assertEquals($genre->name, $response->name);
     }
 }
