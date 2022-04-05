@@ -24,6 +24,13 @@ class CastMember
         $this->validate();
     }
 
+    public function update(string $name)
+    {
+        $this->name = $name;
+
+        $this->validate();
+    }
+
     protected function validate()
     {
         DomainValidation::strMaxLength($this->name);
