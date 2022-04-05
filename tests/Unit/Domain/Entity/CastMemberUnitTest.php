@@ -21,5 +21,25 @@ class CastMemberUnitTest extends TestCase
             type: CastMemberType::ACTOR,
             createdAt: new DateTime(date('Y-m-d H:i:s'))
         );
+
+        $this->assertEquals($uuid, $castMember->id());
+        $this->assertEquals('Name', $castMember->name);
+        $this->assertEquals(CastMemberType::ACTOR, $castMember->type);
+        $this->assertNotEmpty($castMember->createdAt());
+    }
+
+    public function testAttributesNewEntity()
+    {
+        $uuid = (string) RamseyUuid::uuid4();
+
+        $castMember = new CastMember(
+            name: 'Name',
+            type: CastMemberType::DIRECTOR,
+        );
+
+        $this->assertNotEmpty($castMember->id());
+        $this->assertEquals('Name', $castMember->name);
+        $this->assertEquals(CastMemberType::DIRECTOR, $castMember->type);
+        $this->assertNotEmpty($castMember->createdAt());
     }
 }
