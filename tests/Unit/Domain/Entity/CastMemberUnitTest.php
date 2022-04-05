@@ -4,8 +4,10 @@ namespace Tests\Unit\Domain\Entity;
 
 use Core\Domain\Enum\CastMemberType;
 use Core\Domain\Entity\CastMember;
+use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\ValueObject\Uuid;
 use DateTime;
+use DomainException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 
@@ -30,8 +32,6 @@ class CastMemberUnitTest extends TestCase
 
     public function testAttributesNewEntity()
     {
-        $uuid = (string) RamseyUuid::uuid4();
-
         $castMember = new CastMember(
             name: 'Name',
             type: CastMemberType::DIRECTOR,
@@ -41,5 +41,15 @@ class CastMemberUnitTest extends TestCase
         $this->assertEquals('Name', $castMember->name);
         $this->assertEquals(CastMemberType::DIRECTOR, $castMember->type);
         $this->assertNotEmpty($castMember->createdAt());
+    }
+
+    public function testValidation()
+    {
+        $this->expectException(EntityValidationException::class);
+
+        new CastMember(
+            name: 'ab',
+            type: CastMemberType::DIRECTOR,
+        );
     }
 }
