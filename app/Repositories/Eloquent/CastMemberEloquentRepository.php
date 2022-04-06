@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\CastMember as Model;
 use Core\Domain\Entity\CastMember;
 use Core\Domain\Enum\CastMemberType;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\CastMemberRepositoryInterface;
 use Core\Domain\Repository\PaginationInterface;
 use Core\Domain\ValueObject\Uuid as ValueObjectUuid;
@@ -32,7 +33,11 @@ class CastMemberEloquentRepository implements CastMemberRepositoryInterface
     
     public function findById(string $castMemberId): CastMember
     {
+        if (!$dataDb = $this->model->find($castMemberId)) {
+            throw new NotFoundException("Cast Member {$castMemberId} Not Found");
+        }
 
+        return $this->convertToEntity($dataDb);
     }
     
     public function findAll(string $filter = '', $order = 'DESC'): array
