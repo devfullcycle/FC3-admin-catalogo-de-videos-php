@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\CastMember as Model;
+use App\Repositories\Presenters\PaginationPresenter;
 use Core\Domain\Entity\CastMember;
 use Core\Domain\Enum\CastMemberType;
 use Core\Domain\Exception\NotFoundException;
@@ -55,7 +56,14 @@ class CastMemberEloquentRepository implements CastMemberRepositoryInterface
     
     public function paginate(string $filter = '', $order = 'DESC', int $page = 1, int $totalPage = 15): PaginationInterface
     {
+        $query = $this->model;
+        if ($filter) {
+            $query->where('name', 'LIKE', "%{$filter}%");
+        }
+        $query->orderBy('name', $order);
+        $dataDb = $query->paginate($totalPage);
 
+        return new PaginationPresenter($dataDb);
     }
     
     public function update(CastMember $castMember): CastMember
