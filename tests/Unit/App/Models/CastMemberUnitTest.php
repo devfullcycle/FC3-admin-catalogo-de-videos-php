@@ -29,6 +29,7 @@ class CastMemberUnitTest extends ModelTestCase
             'id',
             'name',
             'type',
+            'created_at',
         ];
     }
 
