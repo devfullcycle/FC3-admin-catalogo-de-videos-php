@@ -42,7 +42,15 @@ class CastMemberEloquentRepository implements CastMemberRepositoryInterface
     
     public function findAll(string $filter = '', $order = 'DESC'): array
     {
+        $dataDb = $this->model
+                        ->where(function ($query) use ($filter) {
+                            if ($filter)
+                                $query->where('name', 'LIKE', "%{$filter}%");
+                        })
+                        ->orderBy('name', $order)
+                        ->get();
 
+        return $dataDb->toArray();
     }
     
     public function paginate(string $filter = '', $order = 'DESC', int $page = 1, int $totalPage = 15): PaginationInterface
