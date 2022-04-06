@@ -8,6 +8,7 @@ use App\Repositories\Eloquent\CastMemberEloquentRepository;
 use Core\Domain\Enum\CastMemberType;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\CastMemberRepositoryInterface;
+use Core\Domain\ValueObject\Uuid as ValueObjectUuid;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -86,7 +87,7 @@ class CastMemberEloquentRepositoryTest extends TestCase
     }
 
     public function testPaginationWithTotalPage()
-    
+
     {
         Model::factory()->count(80)->create();
 
@@ -96,5 +97,33 @@ class CastMemberEloquentRepositoryTest extends TestCase
 
         $this->assertCount(10, $response->items());
         $this->assertEquals(80, $response->total());
+    }
+
+    public function testUpdateNotFound()
+    {
+        $this->expectException(NotFoundException::class);
+
+        $entity = new Entity(
+            name: 'teste',
+            type: CastMemberType::DIRECTOR
+        );
+
+        $this->repository->update($entity);
+    }
+
+    public function testUpdate()
+    {
+        $castMember = Model::factory()->create();
+
+        $entity = new Entity(
+            id: new ValueObjectUuid($castMember->id),
+            name: 'new name',
+            type: CastMemberType::DIRECTOR
+        );
+
+        $response = $this->repository->update($entity);
+
+        $this->assertNotEquals($castMember->name, $response->name);
+        $this->assertEquals('new name', $response->name);
     }
 }
