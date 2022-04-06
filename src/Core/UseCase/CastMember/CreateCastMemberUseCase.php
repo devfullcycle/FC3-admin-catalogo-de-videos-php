@@ -32,7 +32,7 @@ class CreateCastMemberUseCase
             id: $entity->id(),
             name: $entity->name,
             type: $input->type,
-            createdAt: $entity->createdAt(),
+            created_at: $entity->createdAt(),
         );
     }
 }

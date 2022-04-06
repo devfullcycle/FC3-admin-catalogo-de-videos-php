@@ -25,7 +25,7 @@ class ListCastMemberUseCase
             id: $castMember->id(),
             name: $castMember->name,
             type: $castMember->type->value,
-            createdAt: $castMember->createdAt(),
+            created_at: $castMember->createdAt(),
         );
     }
 }
