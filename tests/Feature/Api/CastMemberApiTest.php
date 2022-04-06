@@ -53,4 +53,16 @@ class CastMemberApiTest extends TestCase
         $this->assertEquals(20, $response['meta']['total']);
         $this->assertEquals(2, $response['meta']['current_page']);
     }
+
+    public function test_pagination_with_filter()
+    {
+        CastMember::factory()->count(10)->create();
+        CastMember::factory()->count(10)->create([
+            'name' => 'teste'
+        ]);
+
+        $response = $this->getJson("$this->endpoint?filter=teste");
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJsonCount(10, 'data');
+    }
 }
