@@ -65,4 +65,26 @@ class CastMemberApiTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonCount(10, 'data');
     }
+
+    public function test_show_not_found()
+    {
+        $response = $this->getJson("{$this->endpoint}/fake_id");
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function test_show()
+    {
+        $castMember = CastMember::factory()->create();
+
+        $response = $this->getJson("{$this->endpoint}/{$castMember->id}");
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'type',
+                'created_at',
+            ]
+        ]);
+    }
 }
