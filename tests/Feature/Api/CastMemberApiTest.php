@@ -87,4 +87,39 @@ class CastMemberApiTest extends TestCase
             ]
         ]);
     }
+
+    public function test_store_validations()
+    {
+        $response = $this->postJson($this->endpoint, []);
+        
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'name',
+                'type'
+            ]
+        ]);
+    }
+
+    public function test_store()
+    {
+        $response = $this->postJson($this->endpoint, [
+            'name' => 'teste',
+            'type' => 1,
+        ]);
+        
+        $response->assertStatus(Response::HTTP_CREATED);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'type',
+                'created_at'
+            ]
+        ]);
+        $this->assertDatabaseHas('cast_members', [
+            'name' => 'teste'
+        ]);
+    }
 }
