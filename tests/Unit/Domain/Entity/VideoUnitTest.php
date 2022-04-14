@@ -25,6 +25,26 @@ class VideoUnitTest extends TestCase
             published: true,
         );
 
-        $this->assertTrue(true);
+        $this->assertEquals($uuid, $entity->id());
+        $this->assertEquals('new title', $entity->title);
+        $this->assertEquals('description', $entity->description);
+        $this->assertEquals(2029, $entity->yearLaunched);
+        $this->assertEquals(12, $entity->duration);
+        $this->assertEquals(true, $entity->opened);
+        $this->assertEquals(true, $entity->published);
+    }
+
+    public function testId()
+    {
+        $entity = new Video(
+            title: 'new title',
+            description: 'description',
+            yearLaunched: 2029,
+            duration: 12,
+            opened: true,
+            rating: Rating::RATE12,
+        );
+
+        $this->assertNotEmpty($entity->id());
     }
 }
