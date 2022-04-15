@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Domain\Entity;
 
+use Core\Domain\ValueObject\Image;
 use Core\Domain\Entity\Video;
 use Core\Domain\Enum\Rating;
 use Core\Domain\ValueObject\Uuid;
@@ -196,5 +197,22 @@ class VideoUnitTest extends TestCase
             castMemberId: $castMemberId,
         );
         $this->assertCount(1, $entity->castMemberIds);
+    }
+
+    public function testValueObjectImage()
+    {
+        $entity = new Video(
+            title: 'new title',
+            description: 'description',
+            yearLaunched: 2029,
+            duration: 12,
+            opened: true,
+            rating: Rating::RATE12,
+            thumbFile: new Image('teste-path/image.png'),
+        );
+
+        $this->assertNotNull($entity->thumbFile());
+        $this->assertInstanceOf(Image::class, $entity->thumbFile());
+        $this->assertEquals('teste-path/image.png', $entity->thumbFile()->path());
     }
 }
