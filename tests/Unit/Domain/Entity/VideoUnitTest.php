@@ -252,7 +252,11 @@ class VideoUnitTest extends TestCase
             duration: 12,
             opened: true,
             rating: Rating::RATE12,
-            // trailerFile: new Media()
+            trailerFile: $trailerFile,
         );
+
+        $this->assertNotNull($entity->trailerFile());
+        $this->assertInstanceOf(Media::class, $entity->trailerFile());
+        $this->assertEquals('path/video.mp4', $entity->trailerFile()->filePath);
     }
 }

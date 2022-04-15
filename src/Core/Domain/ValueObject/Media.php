@@ -11,4 +11,9 @@ class Media
         protected MediaStatus $mediaStatus,
         protected string $encodedPath = '',
     ) {}
+
+    public function __get($property)
+    {
+        return $this->{$property};
+    }
 }
