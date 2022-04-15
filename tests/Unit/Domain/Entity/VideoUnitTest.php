@@ -240,7 +240,7 @@ class VideoUnitTest extends TestCase
     public function testValueObjectMedia()
     {
         $trailerFile = new Media(
-            filePath: 'path/video.mp4',
+            filePath: 'path/trailer.mp4',
             mediaStatus: MediaStatus::PENDING,
             encodedPath: 'path/encoded.extension',
         );
@@ -257,6 +257,29 @@ class VideoUnitTest extends TestCase
 
         $this->assertNotNull($entity->trailerFile());
         $this->assertInstanceOf(Media::class, $entity->trailerFile());
-        $this->assertEquals('path/video.mp4', $entity->trailerFile()->filePath);
+        $this->assertEquals('path/trailer.mp4', $entity->trailerFile()->filePath);
+    }
+
+
+    public function testValueObjectMediaVideo()
+    {
+        $videoFile = new Media(
+            filePath: 'path/video.mp4',
+            mediaStatus: MediaStatus::COMPLETE,
+        );
+
+        $entity = new Video(
+            title: 'new title',
+            description: 'description',
+            yearLaunched: 2029,
+            duration: 12,
+            opened: true,
+            rating: Rating::RATE12,
+            videoFile: $videoFile,
+        );
+
+        $this->assertNotNull($entity->videoFile());
+        $this->assertInstanceOf(Media::class, $entity->videoFile());
+        $this->assertEquals('path/video.mp4', $entity->videoFile()->filePath);
     }
 }
