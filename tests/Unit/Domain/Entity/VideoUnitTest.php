@@ -215,4 +215,21 @@ class VideoUnitTest extends TestCase
         $this->assertInstanceOf(Image::class, $entity->thumbFile());
         $this->assertEquals('teste-path/image.png', $entity->thumbFile()->path());
     }
+
+    public function testValueObjectImageToThumHalf()
+    {
+        $entity = new Video(
+            title: 'new title',
+            description: 'description',
+            yearLaunched: 2029,
+            duration: 12,
+            opened: true,
+            rating: Rating::RATE12,
+            thumbHalf: new Image('teste-path/image.png'),
+        );
+
+        $this->assertNotNull($entity->thumbHalf());
+        $this->assertInstanceOf(Image::class, $entity->thumbHalf());
+        $this->assertEquals('teste-path/image.png', $entity->thumbHalf()->path());
+    }
 }
