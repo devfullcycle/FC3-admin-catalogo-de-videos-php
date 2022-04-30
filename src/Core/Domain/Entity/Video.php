@@ -5,6 +5,7 @@ namespace Core\Domain\Entity;
 use Core\Domain\Entity\Traits\MethodsMagicsTrait;
 use Core\Domain\Enum\Rating;
 use Core\Domain\Exception\EntityValidationException;
+use Core\Domain\Factory\VideoValidatorFactory;
 use Core\Domain\Notification\Notification;
 use Core\Domain\Notification\NotificationException;
 use Core\Domain\Validation\DomainValidation;
@@ -100,26 +101,7 @@ class Video extends Entity
 
     protected function validation()
     {
-        if (empty($this->title)) {
-            $this->notification->addError([
-                'context' => 'video',
-                'message' => 'Should not be empty or null',
-            ]);
-        }
-
-        if (strlen($this->title) < 3) {
-            $this->notification->addError([
-                'context' => 'video',
-                'message' => 'invalid qtd',
-            ]);
-        }
-
-        if (strlen($this->description) < 3) {
-            $this->notification->addError([
-                'context' => 'video',
-                'message' => 'invalid qtd',
-            ]);
-        }
+        VideoValidatorFactory::create()->validate($this);
 
         if ($this->notification->hasErrors())
             throw new NotificationException(
