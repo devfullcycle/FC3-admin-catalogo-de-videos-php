@@ -9,10 +9,12 @@ use Core\Domain\ValueObject\{
 use Core\Domain\Entity\Video;
 use Core\Domain\Enum\MediaStatus;
 use Core\Domain\Enum\Rating;
+use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\ValueObject\Uuid;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid as RamseyUuid;
+use tidy;
 
 class VideoUnitTest extends TestCase
 {
@@ -298,5 +300,19 @@ class VideoUnitTest extends TestCase
         $this->assertNotNull($entity->videoFile());
         $this->assertInstanceOf(Media::class, $entity->videoFile());
         $this->assertEquals('path/video.mp4', $entity->videoFile()->filePath);
+    }
+
+    public function testValidations()
+    {
+        $this->expectException(EntityValidationException::class);
+
+        new Video(
+            title: 'ne',
+            description: 'de',
+            yearLaunched: 2029,
+            duration: 12,
+            opened: true,
+            rating: Rating::RATE12,
+        );
     }
 }
