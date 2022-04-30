@@ -12,10 +12,8 @@ use Core\Domain\ValueObject\Media;
 use Core\Domain\ValueObject\Uuid;
 use DateTime;
 
-class Video
+class Video extends Entity
 {
-    use MethodsMagicsTrait;
-
     protected array $categoriesId = [];
     protected array $genresId = [];
     protected array $castMemberIds = [];
@@ -36,6 +34,8 @@ class Video
         protected ?Media $trailerFile = null,
         protected ?Media $videoFile = null,
     ) {
+        parent::__construct();
+
         $this->id = $this->id ?? Uuid::random();
         $this->createdAt = $this->createdAt ?? new DateTime();
 
@@ -99,32 +99,30 @@ class Video
 
     protected function validation()
     {
-        $notification = new Notification();
-
         if (empty($this->title)) {
-            $notification->addError([
+            $this->notification->addError([
                 'context' => 'video',
                 'message' => 'Should not be empty or null',
             ]);
         }
 
         if (strlen($this->title) < 3) {
-            $notification->addError([
+            $this->notification->addError([
                 'context' => 'video',
                 'message' => 'invalid qtd',
             ]);
         }
 
         if (strlen($this->description) < 3) {
-            $notification->addError([
+            $this->notification->addError([
                 'context' => 'video',
                 'message' => 'invalid qtd',
             ]);
         }
 
-        if ($notification->hasErrors())
+        if ($this->notification->hasErrors())
             throw new EntityValidationException(
-                $notification->messages('video')
+                $this->notification->messages('video')
             );
     }
 }
