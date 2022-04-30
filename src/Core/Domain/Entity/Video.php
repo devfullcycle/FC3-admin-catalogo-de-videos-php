@@ -6,6 +6,7 @@ use Core\Domain\Entity\Traits\MethodsMagicsTrait;
 use Core\Domain\Enum\Rating;
 use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\Notification\Notification;
+use Core\Domain\Notification\NotificationException;
 use Core\Domain\Validation\DomainValidation;
 use Core\Domain\ValueObject\Image;
 use Core\Domain\ValueObject\Media;
@@ -121,7 +122,7 @@ class Video extends Entity
         }
 
         if ($this->notification->hasErrors())
-            throw new EntityValidationException(
+            throw new NotificationException(
                 $this->notification->messages('video')
             );
     }
