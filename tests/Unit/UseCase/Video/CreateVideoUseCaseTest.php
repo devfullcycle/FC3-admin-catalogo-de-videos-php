@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\UseCase\Video;
 
+use Core\Domain\Entity\Video as Entity;
 use Core\Domain\Enum\Rating;
 use Core\UseCase\Interfaces\{
     FileStorageInterface,
@@ -50,22 +51,40 @@ class CreateVideoUseCaseTest extends TestCase
 
     private function createMockRepository()
     {
-        return Mockery::mock(stdClass::class, VideoRepositoryInterface::class);
+        $mockRepository = Mockery::mock(stdClass::class, VideoRepositoryInterface::class);
+
+        $mockRepository->shouldReceive('insert')
+                                ->andReturn($this->createMockEntity());
+
+        return $mockRepository;
     }
 
     private function createMockTransaction()
     {
-        return Mockery::mock(stdClass::class, TransactionInterface::class);
+        $mockTransaction = Mockery::mock(stdClass::class, TransactionInterface::class);
+
+        $mockTransaction->shouldReceive('commit');
+        $mockTransaction->shouldReceive('rollback');
+
+        return $mockTransaction;
     }
 
     private function createMockFileStorage()
     {
-        return Mockery::mock(stdClass::class, FileStorageInterface::class);
+        $mockFileStorage = Mockery::mock(stdClass::class, FileStorageInterface::class);
+
+        $mockFileStorage->shouldReceive('store')
+                        ->andReturn('path/file.png');
+
+        return $mockFileStorage;
     }
 
     private function createMockEventManager()
     {
-        return Mockery::mock(stdClass::class, VideoEventManagerInterface::class);
+        $mockEventManager = Mockery::mock(stdClass::class, VideoEventManagerInterface::class);
+        $mockEventManager->shouldReceive('dispatch');
+
+        return $mockEventManager;           
     }
 
     private function createMockInputDTO()
@@ -75,6 +94,18 @@ class CreateVideoUseCaseTest extends TestCase
             'desc',
             2023,
             12,
+            true,
+            Rating::RATE10,
+        ]);
+    }
+
+    private function createMockEntity()
+    {
+        return Mockery::mock(Entity::class, [
+            'title',
+            'description',
+            2026,
+            1,
             true,
             Rating::RATE10,
         ]);
