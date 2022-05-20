@@ -13,9 +13,9 @@ class CreateInputVideoDTO
         public int $duration,
         public bool $opened,
         public Rating $rating,
-        public array $categories = [],
-        public array $genres = [],
-        public array $castMembers = [],
+        public array $categories,
+        public array $genres,
+        public array $castMembers,
         public ?array $videoFile = null,
     ) {}
 }
