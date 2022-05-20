@@ -26,9 +26,11 @@ use stdClass;
 
 class CreateVideoUseCaseTest extends TestCase
 {
-    public function test_constructor()
+    protected $useCase;
+
+    protected function setUp(): void
     {
-        new UseCase(
+        $this->useCase = new UseCase(
             repository: $this->createMockRepository(),
             transaction: $this->createMockTransaction(),
             storage: $this->createMockFileStorage(),
@@ -39,23 +41,12 @@ class CreateVideoUseCaseTest extends TestCase
             repositoryCastMember: $this->createMockRepositoryCastMember(),
         );
 
-        $this->assertTrue(true);
+        parent::setUp();
     }
 
     public function test_exec_input_output()
     {
-        $useCase = new UseCase(
-            repository: $this->createMockRepository(),
-            transaction: $this->createMockTransaction(),
-            storage: $this->createMockFileStorage(),
-            eventManager: $this->createMockEventManager(),
-
-            repositoryCategory: $this->createMockRepositoryCategory(),
-            repositoryGenre: $this->createMockRepositoryGenre(),
-            repositoryCastMember: $this->createMockRepositoryCastMember(),
-        );
-
-        $response = $useCase->exec(
+        $response = $this->useCase->exec(
             input: $this->createMockInputDTO(),
         );
 
