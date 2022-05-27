@@ -31,6 +31,18 @@ class BuilderVideo implements Builder
             opened: true,
             rating: $input->rating,
         );
+
+        foreach ($input->categories as $categoryId) {
+            $this->entity->addCategoryId($categoryId);
+        }
+
+        foreach ($input->genres as $genreId) {
+            $this->entity->addGenre($genreId);
+        }
+
+        foreach ($input->castMembers as $castMemberId) {
+            $this->entity->addCastMember($castMemberId);
+        }
     }
     
     public function addMediaVideo(string $path, MediaStatus $mediaStatus): void
