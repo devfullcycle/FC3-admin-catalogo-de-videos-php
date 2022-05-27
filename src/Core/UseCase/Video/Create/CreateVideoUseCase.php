@@ -3,6 +3,7 @@
 namespace Core\UseCase\Video\Create;
 
 use Core\Domain\Entity\Video as Entity;
+use Core\Domain\Enum\Rating;
 use Core\Domain\Events\VideoCreatedEvent;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\{
@@ -50,7 +51,7 @@ class CreateVideoUseCase
 
             $this->transaction->commit();
 
-            return new CreateOutputVideoDTO();
+            return $this->ouput($entity);
         } catch (Throwable $th) {
             $this->transaction->rollback();
 
@@ -152,5 +153,26 @@ class CreateVideoUseCase
 
             throw new NotFoundException($msg);
         }
+    }
+
+    private function ouput(Entity $entity): CreateOutputVideoDTO
+    {
+        return new CreateOutputVideoDTO(
+            id: $entity->id(),
+            title: $entity->title,
+            description: $entity->description,
+            yearLaunched: $entity->yearLaunched,
+            duration: $entity->duration,
+            opened: $entity->opened,
+            rating: $entity->rating,
+            categories: $entity->categoriesId,
+            genres: $entity->genresId,
+            castMembers: $entity->castMemberIds,
+            videoFile: $entity->videoFile()?->filePath,
+            trailerFile: $entity->trailerFile()?->filePath,
+            thumbFile: $entity->thumbFile()?->filePath,
+            thumbHalf: $entity->thumbHalf()?->filePath,
+            bannerFile: $entity->thumbHalf()?->filePath,
+        );
     }
 }
