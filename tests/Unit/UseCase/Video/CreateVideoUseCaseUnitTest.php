@@ -24,7 +24,7 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class CreateVideoUseCaseTest extends TestCase
+class CreateVideoUseCaseUnitTest extends TestCase
 {
     protected $useCase;
 
