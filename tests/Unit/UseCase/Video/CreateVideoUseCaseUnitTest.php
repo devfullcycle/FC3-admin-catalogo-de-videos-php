@@ -32,7 +32,10 @@ class CreateVideoUseCaseUnitTest extends TestCase
     protected function setUp(): void
     {
         $this->useCase = new UseCase(
-            repository: $this->createMockRepository(),
+            repository: $this->createMockRepository(
+                timesCallAction: 1,
+                timesCallUpdateMedia: 1,
+            ),
             transaction: $this->createMockTransaction(),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
@@ -142,13 +145,17 @@ class CreateVideoUseCaseUnitTest extends TestCase
         ];
     }
 
-    private function createMockRepository()
-    {
+    private function createMockRepository(
+        int $timesCallAction,
+        int $timesCallUpdateMedia,
+    ) {
         $mockRepository = Mockery::mock(stdClass::class, VideoRepositoryInterface::class);
 
         $mockRepository->shouldReceive('insert')
+                                ->times($timesCallAction)
                                 ->andReturn($this->createMockEntity());
-        $mockRepository->shouldReceive('updateMedia');
+        $mockRepository->shouldReceive('updateMedia')
+                        ->times($timesCallUpdateMedia);
 
         return $mockRepository;
     }
@@ -246,5 +253,12 @@ class CreateVideoUseCaseUnitTest extends TestCase
             true,
             Rating::RATE10,
         ]);
+    }
+
+    protected function tearDown(): void
+    {
+        Mockery::close();
+
+        parent::tearDown();
     }
 }
