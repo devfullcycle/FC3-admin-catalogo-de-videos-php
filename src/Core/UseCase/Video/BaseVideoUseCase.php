@@ -97,7 +97,7 @@ abstract class BaseVideoUseCase
         );
     }
 
-    protected function validateIds(array $ids = [], $repository, string $singularLabel, ?string $pluralLabel = null)
+    protected function validateIds(array $ids, $repository, string $singularLabel, ?string $pluralLabel = null)
     {
         $idsDb = $repository->getIdsListIds($ids);
 
