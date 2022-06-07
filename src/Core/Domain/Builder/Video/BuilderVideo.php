@@ -21,7 +21,7 @@ class BuilderVideo implements Builder
         $this->entity = null;
     }
 
-    public function createEntity(object $input): void
+    public function createEntity(object $input): Builder
     {
         $this->entity = new Entity(
             title: $input->title,
@@ -32,6 +32,13 @@ class BuilderVideo implements Builder
             rating: $input->rating,
         );
 
+        $this->addIds($input);
+
+        return $this;
+    }
+
+    protected function addIds(object $input)
+    {
         foreach ($input->categories as $categoryId) {
             $this->entity->addCategoryId($categoryId);
         }
@@ -45,43 +52,53 @@ class BuilderVideo implements Builder
         }
     }
     
-    public function addMediaVideo(string $path, MediaStatus $mediaStatus): void
+    public function addMediaVideo(string $path, MediaStatus $mediaStatus): Builder
     {
         $media = new Media(
             filePath: $path,
             mediaStatus: $mediaStatus
         );
         $this->entity->setVideoFile($media);
+
+        return $this;
     }
     
-    public function addTrailer(string $path): void
+    public function addTrailer(string $path): Builder
     {
         $media = new Media(
             filePath: $path,
             mediaStatus: MediaStatus::COMPLETE
         );
         $this->entity->setTrailerFile($media);
+
+        return $this;
     }
     
-    public function addThumb(string $path): void
+    public function addThumb(string $path): Builder
     {
         $this->entity->setThumbFile(new Image(
             path: $path
         ));
+
+        return $this;
     }
     
-    public function addThumbHalf(string $path): void
+    public function addThumbHalf(string $path): Builder
     {
         $this->entity->setThumbHalf(new Image(
             path: $path
         ));
+
+        return $this;
     }
     
-    public function addBanner(string $path): void
+    public function addBanner(string $path): Builder
     {
         $this->entity->setBannerFile(new Image(
             path: $path
         ));
+
+        return $this;
     }
     
     public function getEntity(): Entity
