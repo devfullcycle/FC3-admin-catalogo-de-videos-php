@@ -84,21 +84,62 @@ class CreateVideoUseCaseUnitTest extends TestCase
         ];
     }
 
-    public function test_upload_files()
-    {
+    /**
+     * @dataProvider dataProviderFiles
+     */
+    public function test_upload_files(
+        array $video,
+        array $trailer,
+        array $thumb,
+        array $thumbHalf,
+        array $banner,
+    ) {
         $response = $this->useCase->exec(
             input: $this->createMockInputDTO(
-                videoFile: ['tmp' => 'tmp/file.mp4'],
-                trailerFile: ['tmp' => 'tmp/file.mp4'],
-                thumbFile: ['tmp' => 'tmp/file.png'],
-                thumbHalf: ['tmp' => 'tmp/file.png'],
-                bannerFile: ['tmp' => 'tmp/file.png'],
+                videoFile: $video['value'],
+                trailerFile: $trailer['value'],
+                thumbFile: $thumb['value'],
+                thumbHalf: $thumbHalf['value'],
+                bannerFile: $banner['value'],
             ),
         );
         
-        $this->assertNotNull($response->videoFile);
-        $this->assertNotNull($response->trailerFile);
-        $this->assertNotNull($response->thumbFile);
+        $this->assertEquals($response->videoFile, $video['expected']);
+        $this->assertEquals($response->trailerFile, $trailer['expected']);
+        $this->assertEquals($response->thumbFile, $thumb['expected']);
+        $this->assertEquals($response->thumbHalf, $thumbHalf['expected']);
+        $this->assertEquals($response->bannerFile, $banner['expected']);
+    }
+
+    public function dataProviderFiles(): array
+    {
+        return [
+            [
+                'video' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+                'trailer' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+                'thumb' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+                'thumbHalf' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+                'banner' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+            ], [
+                'video' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+                'trailer' => ['value' => null, 'expected' => null],
+                'thumb' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+                'thumbHalf' => ['value' => null, 'expected' => null],
+                'banner' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+            ], [
+                'video' => ['value' => null, 'expected' => null],
+                'trailer' => ['value' => null, 'expected' => null],
+                'thumb' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+                'thumbHalf' => ['value' => null, 'expected' => null],
+                'banner' => ['value' => ['tmp' => 'tmp/file.mp4'], 'expected' => 'path/file.png'],
+            ], [
+                'video' => ['value' => null, 'expected' => null],
+                'trailer' => ['value' => null, 'expected' => null],
+                'thumb' => ['value' => null, 'expected' => null],
+                'thumbHalf' => ['value' => null, 'expected' => null],
+                'banner' => ['value' => null, 'expected' => null],
+            ],
+        ];
     }
 
     private function createMockRepository()
