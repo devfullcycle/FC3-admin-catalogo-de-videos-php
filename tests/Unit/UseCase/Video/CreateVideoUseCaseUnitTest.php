@@ -4,6 +4,7 @@ namespace Tests\Unit\UseCase\Video;
 
 use Core\Domain\Entity\Video as Entity;
 use Core\Domain\Enum\Rating;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\{
     CastMemberRepositoryInterface,
     CategoryRepositoryInterface,
@@ -51,6 +52,30 @@ class CreateVideoUseCaseUnitTest extends TestCase
         );
 
         $this->assertInstanceOf(CreateOutputVideoDTO::class, $response);
+    }
+
+    public function test_exception_categories_ids()
+    {
+        $this->expectException(NotFoundException::class);
+        $this->expectErrorMessage('Category uuid-1 not found');
+
+        $this->useCase->exec(
+            input: $this->createMockInputDTO(
+                categoriesIds: ['uuid-1']
+            ),
+        );
+    }
+
+    public function test_exception_message_categories_ids()
+    {
+        $this->expectException(NotFoundException::class);
+        $this->expectErrorMessage('Categories uuid-1, uuid-2 not found');
+
+        $this->useCase->exec(
+            input: $this->createMockInputDTO(
+                categoriesIds: ['uuid-1', 'uuid-2']
+            ),
+        );
     }
 
     private function createMockRepository()
@@ -119,8 +144,11 @@ class CreateVideoUseCaseUnitTest extends TestCase
         return $mockEventManager;           
     }
 
-    private function createMockInputDTO()
-    {
+    private function createMockInputDTO(
+        array $categoriesIds = [],
+        array $genresIds = [],
+        array $castMembersIds = [],
+    ) {
         return Mockery::mock(CreateInputVideoDTO::class, [
             'title',
             'desc',
@@ -128,9 +156,9 @@ class CreateVideoUseCaseUnitTest extends TestCase
             12,
             true,
             Rating::RATE10,
-            [],
-            [],
-            [],
+            $categoriesIds,
+            $genresIds,
+            $castMembersIds,
         ]);
     }
 
