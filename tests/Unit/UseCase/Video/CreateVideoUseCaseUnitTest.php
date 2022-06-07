@@ -27,14 +27,16 @@ use stdClass;
 
 class CreateVideoUseCaseUnitTest extends TestCase
 {
-    protected $useCase;
+    protected UseCase $useCase;
 
-    protected function setUp(): void
-    {
+    protected function createUseCase(
+        int $timesCallMethodActionRepository = 1,
+        int $timesCallMethodUpdateMediaRepository = 1,
+    ) {
         $this->useCase = new UseCase(
             repository: $this->createMockRepository(
-                timesCallAction: 1,
-                timesCallUpdateMedia: 1,
+                timesCallAction: $timesCallMethodActionRepository,
+                timesCallUpdateMedia: $timesCallMethodUpdateMediaRepository,
             ),
             transaction: $this->createMockTransaction(),
             storage: $this->createMockFileStorage(),
@@ -44,12 +46,12 @@ class CreateVideoUseCaseUnitTest extends TestCase
             repositoryGenre: $this->createMockRepositoryGenre(),
             repositoryCastMember: $this->createMockRepositoryCastMember(),
         );
-
-        parent::setUp();
     }
 
     public function test_exec_input_output()
     {
+        $this->createUseCase();
+
         $response = $this->useCase->exec(
             input: $this->createMockInputDTO(),
         );
@@ -64,6 +66,11 @@ class CreateVideoUseCaseUnitTest extends TestCase
         string $label,
         array $ids,
     ) {
+        $this->createUseCase(
+            timesCallMethodActionRepository: 0,
+            timesCallMethodUpdateMediaRepository: 0,
+        );
+
         $this->expectException(NotFoundException::class);
         $this->expectErrorMessage(sprintf(
             '%s %s not found',
@@ -97,6 +104,8 @@ class CreateVideoUseCaseUnitTest extends TestCase
         array $thumbHalf,
         array $banner,
     ) {
+        $this->createUseCase();
+
         $response = $this->useCase->exec(
             input: $this->createMockInputDTO(
                 videoFile: $video['value'],
