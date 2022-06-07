@@ -47,11 +47,11 @@ abstract class BaseVideoUseCase
             $this->eventManager->dispatch(new VideoCreatedEvent($entity));
         }
 
-        if ($pathBannerFile = $this->storageFile($path, $input->bannerFile)) {
-            $this->builder->addTrailer($pathBannerFile);
+        if ($pathTrailerFile = $this->storageFile($path, $input->trailerFile)) {
+            $this->builder->addTrailer($pathTrailerFile);
         }
 
-        if ($pathThumbFile = $this->storageFile($path, $input->bannerFile)) {
+        if ($pathThumbFile = $this->storageFile($path, $input->thumbFile)) {
             $this->builder->addThumb($pathThumbFile);
         }
 

@@ -51,9 +51,9 @@ class CreateVideoUseCase extends BaseVideoUseCase
             castMembers: $entity->castMemberIds,
             videoFile: $entity->videoFile()?->filePath,
             trailerFile: $entity->trailerFile()?->filePath,
-            thumbFile: $entity->thumbFile()?->filePath,
-            thumbHalf: $entity->thumbHalf()?->filePath,
-            bannerFile: $entity->thumbHalf()?->filePath,
+            thumbFile: $entity->thumbFile()?->path(),
+            thumbHalf: $entity->thumbHalf()?->path(),
+            bannerFile: $entity->thumbHalf()?->path(),
         );
     }
 }
