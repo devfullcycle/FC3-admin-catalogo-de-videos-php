@@ -4,7 +4,7 @@ namespace Tests\Unit\UseCase\Video;
 
 use Core\Domain\Enum\Rating;
 use Core\Domain\ValueObject\Uuid;
-use Core\UseCase\Video\Create\UpdateVideoUseCase;
+use Core\UseCase\Video\Update\UpdateVideoUseCase;
 use Core\UseCase\Video\Update\DTO\{
     UpdateInputVideoDTO,
     UpdateOutputVideoDTO
