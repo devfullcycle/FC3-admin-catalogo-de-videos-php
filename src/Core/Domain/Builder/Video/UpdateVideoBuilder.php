@@ -29,5 +29,7 @@ class UpdateVideoBuilder extends BuilderVideo
     public function setEntity(Entity $entity): Builder
     {
         $this->entity = $entity;
+
+        return $this;
     }
 }

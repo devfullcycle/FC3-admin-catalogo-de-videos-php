@@ -181,11 +181,14 @@ abstract class BaseVideoUseCaseUnitTest extends TestCase
         int $timesCallAction,
         int $timesCallUpdateMedia,
     ) {
+        $entity = $this->createEntity();
         $mockRepository = Mockery::mock(stdClass::class, VideoRepositoryInterface::class);
 
         $mockRepository->shouldReceive($this->nameActionRepository())
                                 ->times($timesCallAction)
-                                ->andReturn($this->createMockEntity());
+                                ->andReturn($entity);
+        $mockRepository->shouldReceive('findById')
+                            ->andReturn($entity);
         $mockRepository->shouldReceive('updateMedia')
                         ->times($timesCallUpdateMedia);
 
@@ -250,16 +253,16 @@ abstract class BaseVideoUseCaseUnitTest extends TestCase
         return $mockEventManager;           
     }
 
-    private function createMockEntity()
+    private function createEntity()
     {
-        return Mockery::mock(Entity::class, [
-            'title',
-            'description',
-            2026,
-            1,
-            true,
-            Rating::RATE10,
-        ]);
+        return new Entity(
+            title: 'title',
+            description: 'desc',
+            yearLaunched: 2026,
+            duration: 1,
+            opened: true,
+            rating: Rating::L,
+        );
     }
 
     protected function tearDown(): void
