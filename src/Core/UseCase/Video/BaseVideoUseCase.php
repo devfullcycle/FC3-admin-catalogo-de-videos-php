@@ -17,12 +17,12 @@ use Core\UseCase\Interfaces\{
     FileStorageInterface,
     TransactionInterface
 };
-use Core\Domain\Builder\Video\BuilderVideo;
+use Core\Domain\Builder\Video\Builder;
 use Core\UseCase\Video\Interfaces\VideoEventManagerInterface;
 
 abstract class BaseVideoUseCase
 {
-    protected BuilderVideo $builder;
+    protected Builder $builder;
 
     public function __construct(
         protected VideoRepositoryInterface $repository,
@@ -34,8 +34,10 @@ abstract class BaseVideoUseCase
         protected GenreRepositoryInterface $repositoryGenre,
         protected CastMemberRepositoryInterface $repositoryCastMember,
     ) {
-        $this->builder = new BuilderVideo;
+        $this->builder = $this->getBuilder();
     }
+
+    abstract protected function getBuilder(): Builder;
 
     protected function storageFiles(object $input): void
     {
