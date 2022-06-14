@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-enum MediaTypes
+enum MediaTypes: int
 {
-    case VIDEO;
-    case TRAILER;
+    case VIDEO = 0;
+    case TRAILER = 1;
 }
