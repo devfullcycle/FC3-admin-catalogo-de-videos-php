@@ -23,4 +23,9 @@ class CastMember extends Model
         'id' => 'string',
         'deleted_at' => 'datetime',
     ];
+
+    public function videos()
+    {
+        return $this->belongsToMany(Video::class);
+    }
 }

@@ -10,4 +10,9 @@ class ImageVideo extends Model
     use HasFactory;
 
     protected $table = 'images_video';
+
+    public function video()
+    {
+        return $this->belongsTo(Video::class);
+    }
 }
