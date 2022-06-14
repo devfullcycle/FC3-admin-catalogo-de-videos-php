@@ -14,7 +14,19 @@ return new class extends Migration
     public function up()
     {
         Schema::create('videos', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('title');
+            $table->text('description');
+            $table->smallInteger('year_launched');
+            $table->boolean('opened')->default(false);
+            $table->string('rating', 3);
+            $table->smallInteger('duration');
+            // $table->string('thumb_file')->nullable();
+            // $table->string('thumb_half_file')->nullable();
+            // $table->string('banner_file')->nullable();
+            // $table->string('trailer_file')->nullable();
+            // $table->string('video_file')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
