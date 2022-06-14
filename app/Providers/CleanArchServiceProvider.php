@@ -2,19 +2,31 @@
 
 namespace App\Providers;
 
+use App\Events\{
+    VideoCreatedEvent
+};
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Eloquent\{
     CastMemberEloquentRepository,
     CategoryEloquentRepository,
-    GenreEloquentRepository
+    GenreEloquentRepository,
+    VideoEloquentRepository
 };
 use App\Repositories\Transaction\DBTransaction;
+use App\Services\{
+    Storage\FileStorage
+};
 use Core\Domain\Repository\{
     CastMemberRepositoryInterface,
     CategoryRepositoryInterface,
-    GenreRepositoryInterface
+    GenreRepositoryInterface,
+    VideoRepositoryInterface
 };
-use Core\UseCase\Interfaces\TransactionInterface;
+use Core\UseCase\Interfaces\{
+    FileStorageInterface,
+    TransactionInterface
+};
+use Core\UseCase\Video\Interfaces\VideoEventManagerInterface;
 
 class CleanArchServiceProvider extends ServiceProvider
 {
@@ -25,17 +37,16 @@ class CleanArchServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->bingRepositories();
+
         $this->app->singleton(
-            CategoryRepositoryInterface::class,
-            CategoryEloquentRepository::class
+            FileStorageInterface::class,
+            FileStorage::class,
         );
+
         $this->app->singleton(
-            GenreRepositoryInterface::class,
-            GenreEloquentRepository::class
-        );
-        $this->app->singleton(
-            CastMemberRepositoryInterface::class,
-            CastMemberEloquentRepository::class
+            VideoEventManagerInterface::class,
+            VideoCreatedEvent::class
         );
 
         /**
@@ -55,5 +66,28 @@ class CleanArchServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+
+    private function bingRepositories()
+    {
+        /**
+         * Repositories
+         */
+        $this->app->singleton(
+            CategoryRepositoryInterface::class,
+            CategoryEloquentRepository::class
+        );
+        $this->app->singleton(
+            GenreRepositoryInterface::class,
+            GenreEloquentRepository::class
+        );
+        $this->app->singleton(
+            CastMemberRepositoryInterface::class,
+            CastMemberEloquentRepository::class
+        );
+        $this->app->singleton(
+            VideoRepositoryInterface::class,
+            VideoEloquentRepository::class
+        );
     }
 }
