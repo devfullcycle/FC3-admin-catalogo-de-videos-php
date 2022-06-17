@@ -13,6 +13,8 @@ use App\Repositories\Eloquent\VideoEloquentRepository;
 use Core\Domain\Enum\Rating;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\VideoRepositoryInterface;
+use Core\Domain\ValueObject\Uuid;
+use DateTime;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -172,5 +174,47 @@ class VideoEloquentRepositoryTest extends TestCase
                 'totalPage' => 15,
             ],
         ];
+    }
+
+    public function testUpdateNotFoundId()
+    {
+        $this->expectException(NotFoundException::class);
+
+        $entity = new EntityVideo(
+            title: 'Test',
+            description: 'Test',
+            yearLaunched: 2026,
+            rating: Rating::L,
+            duration: 1,
+            opened: true,
+        );
+
+        $this->repository->update($entity);
+    }
+
+    public function testUpdate()
+    {
+        $videoDb = Model::factory()->create();
+
+        $this->assertDatabaseHas('videos', [
+            'title' => $videoDb->title,
+        ]);
+
+        $entity = new EntityVideo(
+            id: new Uuid($videoDb->id),
+            title: 'Test',
+            description: 'Test',
+            yearLaunched: 2026,
+            rating: Rating::L,
+            duration: 1,
+            opened: true,
+            createdAt: new DateTime($videoDb->created_at),
+        );
+
+        $this->repository->update($entity);
+
+        $this->assertDatabaseHas('videos', [
+            'title' => 'Test',
+        ]);
     }
 }
