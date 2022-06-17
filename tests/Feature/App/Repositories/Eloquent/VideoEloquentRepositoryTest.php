@@ -135,4 +135,19 @@ class VideoEloquentRepositoryTest extends TestCase
         $this->assertCount(10, $response);
         $this->assertDatabaseCount('videos', 20);
     }
+
+    public function testPagination()
+    {
+        Model::factory()->count(50)->create();
+
+        $response = $this->repository->paginate(
+            page: 1,
+            totalPage: 10
+        );
+
+        $this->assertCount(10, $response->items());
+        $this->assertEquals(50, $response->total());
+        $this->assertEquals(1, $response->currentPage());
+        $this->assertEquals(10, $response->perPage());
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Video as Model;
+use App\Repositories\Presenters\PaginationPresenter;
 use Core\Domain\Entity\{
     Entity,
     Video as VideoEntity
@@ -64,7 +65,16 @@ class VideoEloquentRepository implements VideoRepositoryInterface
 
     public function paginate(string $filter = '', $order = 'DESC', int $page = 1, int $totalPage = 15): PaginationInterface
     {
+        $result = $this->model
+                        ->where(function ($query) use ($filter) {
+                            if ($filter) {
+                                $query->where('title', 'LIKE', "%{$filter}%");
+                            }
+                        })
+                        ->orderBy('title', $order)
+                        ->paginate($totalPage, ['*'], 'page', $page);
 
+        return new PaginationPresenter($result);
     }
 
     public function update(Entity $entity): Entity
