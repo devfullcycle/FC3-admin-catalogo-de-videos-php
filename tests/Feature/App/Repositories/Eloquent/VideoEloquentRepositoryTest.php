@@ -194,6 +194,10 @@ class VideoEloquentRepositoryTest extends TestCase
 
     public function testUpdate()
     {
+        $categories = Category::factory()->count(10)->create();
+        $genres = Genre::factory()->count(10)->create();
+        $castMembers = CastMember::factory()->count(10)->create();
+
         $videoDb = Model::factory()->create();
 
         $this->assertDatabaseHas('videos', [
@@ -211,10 +215,28 @@ class VideoEloquentRepositoryTest extends TestCase
             createdAt: new DateTime($videoDb->created_at),
         );
 
-        $this->repository->update($entity);
+        foreach ($categories as $category) {
+            $entity->addCategoryId($category->id);
+        }
+        foreach ($genres as $genre) {
+            $entity->addGenre($genre->id);
+        }
+        foreach ($castMembers as $castMember) {
+            $entity->addCastMember($castMember->id);
+        }
+
+        $entityInDb = $this->repository->update($entity);
 
         $this->assertDatabaseHas('videos', [
             'title' => 'Test',
         ]);
+
+        $this->assertDatabaseCount('category_video', 10);
+        $this->assertDatabaseCount('genre_video', 10);
+        $this->assertDatabaseCount('cast_member_video', 10);
+
+        $this->assertEquals($categories->pluck('id')->toArray(), $entityInDb->categoriesId);
+        $this->assertEquals($genres->pluck('id')->toArray(), $entityInDb->genresId);
+        $this->assertEquals($castMembers->pluck('id')->toArray(), $entityInDb->castMemberIds);
     }
 }

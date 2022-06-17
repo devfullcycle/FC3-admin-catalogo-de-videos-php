@@ -94,6 +94,8 @@ class VideoEloquentRepository implements VideoRepositoryInterface
 
         $entityDb->refresh();
 
+        $this->syncRelationships($entityDb, $entity);
+
         return $this->convertObjectToEntity($entityDb);
     }
 
