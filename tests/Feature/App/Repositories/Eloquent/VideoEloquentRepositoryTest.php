@@ -11,6 +11,7 @@ use App\Models\{
 use Core\Domain\Entity\Video as EntityVideo;
 use App\Repositories\Eloquent\VideoEloquentRepository;
 use Core\Domain\Enum\Rating;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\VideoRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -92,5 +93,12 @@ class VideoEloquentRepositoryTest extends TestCase
         $this->assertEquals($categories->pluck('id')->toArray(), $entityInDb->categoriesId);
         $this->assertEquals($genres->pluck('id')->toArray(), $entityInDb->genresId);
         $this->assertEquals($castMembers->pluck('id')->toArray(), $entityInDb->castMemberIds);
+    }
+
+    public function testNotFoundVideo()
+    {
+        $this->expectException(NotFoundException::class);
+
+        $this->repository->findById('fake_value');
     }
 }
