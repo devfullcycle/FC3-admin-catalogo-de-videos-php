@@ -33,6 +33,8 @@ class VideoEloquentRepository implements VideoRepositoryInterface
             'opened' => $entity->opened,
         ]);
 
+        $this->syncRelationships($entityDb, $entity);
+
         return $this->convertObjectToEntity($entityDb);
     }
 
@@ -64,6 +66,13 @@ class VideoEloquentRepository implements VideoRepositoryInterface
     public function updateMedia(Entity $entity): Entity
     {
         
+    }
+
+    protected function syncRelationships(Model $model, Entity $entity)
+    {
+        $model->categories()->sync($entity->categoriesId);
+        $model->genres()->sync($entity->genresId);
+        $model->castMembers()->sync($entity->castMemberIds);
     }
 
     protected function convertObjectToEntity(object $object): VideoEntity
