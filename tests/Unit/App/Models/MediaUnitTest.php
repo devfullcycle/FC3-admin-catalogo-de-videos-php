@@ -7,6 +7,7 @@ use App\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use PHPUnit\Framework\TestCase;
+use App\Models\Traits\UuidTrait;
 
 class MediaUnitTest extends ModelTestCase
 {
@@ -19,6 +20,7 @@ class MediaUnitTest extends ModelTestCase
     {
         return [
             HasFactory::class,
+            UuidTrait::class,
         ];
     }
     
