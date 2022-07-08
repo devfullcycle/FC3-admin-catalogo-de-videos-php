@@ -3,15 +3,15 @@
 namespace Tests\Unit\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Media;
+use App\Models\ImageVideo;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\UuidTrait;
 
-class MediaUnitTest extends ModelTestCase
+class ImageVideoUnitTest extends ModelTestCase
 {
     protected function model(): Model
     {
-        return new Media();
+        return new ImageVideo();
     }
 
     protected function traits(): array
@@ -25,9 +25,7 @@ class MediaUnitTest extends ModelTestCase
     protected function fillables(): array
     {
         return [
-            'file_path',
-            'encoded_path',
-            'media_status',
+            'path',
             'type',
         ];
     }
