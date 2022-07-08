@@ -56,4 +56,15 @@ trait VideoTrait
             ]);
         }
     }
+
+    public function updateImageThumbHalf(Entity $entity, Model $model): void
+    {
+        if ($thumbHalf = $entity->thumbHalf()) {
+            $action = $model->thumbHalf()->first() ? 'update' : 'create';
+            $model->thumbHalf()->{$action}([
+                'path' => $thumbHalf->path(),
+                'type' => ImageTypes::THUMB_HALF->value,
+            ]);
+        }
+    }
 }
