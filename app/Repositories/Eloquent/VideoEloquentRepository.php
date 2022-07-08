@@ -124,6 +124,7 @@ class VideoEloquentRepository implements VideoRepositoryInterface
             throw new NotFoundException('Video not found');
         }
 
+        $this->updateMediaVideo($entity, $objectModel);
         $this->updateMediaTrailer($entity, $objectModel);
         $this->updateImageBanner($entity, $objectModel);
         
@@ -166,6 +167,14 @@ class VideoEloquentRepository implements VideoRepositoryInterface
                 filePath: $trailer->file_path,
                 mediaStatus: MediaStatus::from($trailer->media_status),
                 encodedPath: $trailer->encoded_path
+            ));
+        }
+
+        if ($mediaVideo = $model->media) {
+            $entity->setVideoFile(new ValueObjectMedia(
+                filePath: $mediaVideo->file_path,
+                mediaStatus: MediaStatus::from($mediaVideo->media_status),
+                encodedPath: $mediaVideo->encoded_path
             ));
         }
 

@@ -9,9 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 
 trait VideoTrait
 {
-    public function updateMediaVideo(): void
+    public function updateMediaVideo(Entity $entity, Model $model): void
     {
-
+        if ($mediaVideo = $entity->videoFile()) {
+            $action = $model->media()->first() ? 'update' : 'create';
+            $model->media()->{$action}([
+                'file_path' => $mediaVideo->filePath,
+                'media_status' => $mediaVideo->mediaStatus->value,
+                'encoded_path' => $mediaVideo->encodedPath,
+                'type' => MediaTypes::VIDEO->value,
+            ]);
+        }
     }
 
     public function updateMediaTrailer(Entity $entity, Model $model): void
