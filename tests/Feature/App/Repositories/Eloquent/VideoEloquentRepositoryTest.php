@@ -282,12 +282,25 @@ class VideoEloquentRepositoryTest extends TestCase
 
         $this->assertDatabaseCount('medias_video', 0);
         $this->repository->updateMedia($entity);
-        $this->repository->updateMedia($entity);
-        $this->assertDatabaseCount('medias_video', 1);
         $this->assertDatabaseHas('medias_video', [
             'video_id' => $entity->id(),
             'file_path' => 'test.mp4',
             'media_status' => MediaStatus::PROCESSING->value,
+        ]);
+
+        $entity->setTrailerFile(new ValueObjectMedia(
+            filePath: 'test2.mp4',
+            mediaStatus: MediaStatus::COMPLETE,
+            encodedPath: 'test2.xpto',
+        ));
+
+        $this->repository->updateMedia($entity);
+        $this->assertDatabaseCount('medias_video', 1);
+        $this->assertDatabaseHas('medias_video', [
+            'video_id' => $entity->id(),
+            'file_path' => 'test2.mp4',
+            'media_status' => MediaStatus::COMPLETE->value,
+            'encoded_path' => 'test2.xpto',
         ]);
     }
 }
