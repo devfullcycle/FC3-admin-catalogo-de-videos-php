@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Enums\MediaTypes;
 use App\Models\Video as Model;
 use App\Repositories\Presenters\PaginationPresenter;
 use Core\Domain\Entity\{
@@ -115,12 +116,16 @@ class VideoEloquentRepository implements VideoRepositoryInterface
         }
 
         if ($trailer = $entity->trailerFile()) {
-            $entityDb->trailer()->updateOrCreate([
+            $action = $entityDb->trailer()->first() ? 'update' : 'create';
+            $entityDb->trailer()->{$action}([
                 'file_path' => $trailer->filePath,
                 'media_status' => $trailer->mediaStatus->value,
                 'encoded_path' => $trailer->encodedPath,
+                'type' => MediaTypes::TRAILER->value,
             ]);
         }
+
+        return $entity;
     }
 
     protected function syncRelationships(Model $model, Entity $entity)
