@@ -15,7 +15,10 @@ use Core\Domain\Enum\Rating;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\PaginationInterface;
 use Core\Domain\Repository\VideoRepositoryInterface;
-use Core\Domain\ValueObject\Media as ValueObjectMedia;
+use Core\Domain\ValueObject\{
+    Image as ValueObjectImage,
+    Media as ValueObjectMedia,
+};
 use Core\Domain\ValueObject\Uuid;
 
 class VideoEloquentRepository implements VideoRepositoryInterface
@@ -176,6 +179,10 @@ class VideoEloquentRepository implements VideoRepositoryInterface
                 mediaStatus: MediaStatus::from($trailer->media_status),
                 encodedPath: $trailer->encoded_path
             ));
+        }
+
+        if ($banner = $model->banner) {
+            $entity->setBannerFile(new ValueObjectImage(path: $banner->path));
         }
 
         return $entity;

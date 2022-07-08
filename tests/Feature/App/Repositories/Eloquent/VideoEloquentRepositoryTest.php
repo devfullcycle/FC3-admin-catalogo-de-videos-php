@@ -332,5 +332,18 @@ class VideoEloquentRepositoryTest extends TestCase
             'path' => 'test.jpg',
             'type' => ImageTypes::BANNER->value,
         ]);
+
+        $entity->setBannerFile(new ValueObjectImage(
+            path: 'test2.jpg',
+        ));
+        $entityDb = $this->repository->updateMedia($entity);
+        $this->assertDatabaseHas('images_video', [
+            'video_id' => $entity->id(),
+            'path' => 'test2.jpg',
+            'type' => ImageTypes::BANNER->value,
+        ]);
+        $this->assertDatabaseCount('images_video', 1);
+
+        $this->assertNotNull($entityDb->bannerFile());
     }
 }
