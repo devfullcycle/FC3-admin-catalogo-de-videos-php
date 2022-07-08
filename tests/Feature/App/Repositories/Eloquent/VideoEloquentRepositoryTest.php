@@ -366,7 +366,7 @@ class VideoEloquentRepositoryTest extends TestCase
             ),
         );
         $this->repository->insert($entity);
-        $this->assertDatabaseCount('medias_video', 0);
+        $this->assertDatabaseCount('images_video', 0);
 
         $this->repository->updateMedia($entity);
         $this->assertDatabaseHas('images_video', [
@@ -387,5 +387,42 @@ class VideoEloquentRepositoryTest extends TestCase
         $this->assertDatabaseCount('images_video', 1);
 
         $this->assertNotNull($entityDb->bannerFile());
+    }
+
+    public function testInsertWithImageThumb()
+    {
+        $entity = new EntityVideo(
+            title: 'Test',
+            description: 'Test',
+            yearLaunched: 2026,
+            rating: Rating::L,
+            duration: 1,
+            opened: true,
+            thumbFile: new ValueObjectImage(
+                path: 'test.jpg',
+            ),
+        );
+        $this->repository->insert($entity);
+        $this->assertDatabaseCount('images_video', 0);
+
+        $this->repository->updateMedia($entity);
+        $this->assertDatabaseHas('images_video', [
+            'video_id' => $entity->id(),
+            'path' => 'test.jpg',
+            'type' => ImageTypes::THUMB->value,
+        ]);
+
+        $entity->setThumbFile(new ValueObjectImage(
+            path: 'test2.jpg',
+        ));
+        $entityDb = $this->repository->updateMedia($entity);
+        $this->assertDatabaseHas('images_video', [
+            'video_id' => $entity->id(),
+            'path' => 'test2.jpg',
+            'type' => ImageTypes::THUMB->value,
+        ]);
+        $this->assertDatabaseCount('images_video', 1);
+
+        $this->assertNotNull($entityDb->thumbFile());
     }
 }

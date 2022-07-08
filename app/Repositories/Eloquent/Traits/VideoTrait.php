@@ -45,4 +45,15 @@ trait VideoTrait
             ]);
         }
     }
+
+    public function updateImageThumb(Entity $entity, Model $model): void
+    {
+        if ($thumb = $entity->thumbFile()) {
+            $action = $model->thumb()->first() ? 'update' : 'create';
+            $model->thumb()->{$action}([
+                'path' => $thumb->path(),
+                'type' => ImageTypes::THUMB->value,
+            ]);
+        }
+    }
 }
