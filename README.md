@@ -5,21 +5,14 @@
 
 Clone Repositório
 ```sh
-git clone https://github.com/codeedu/micro-admin-videos-php.git laravel9
+git clone https://github.com/devfullcycle/FC3-admin-catalogo-de-videos-php.git laravel9
 ```
 
 ```sh
 cd laravel9/
 ```
 
-
-Alterne de branch
-```sh
-git checkout laravel-9-quick-start
-```
-
-
-Remova o versionamento
+Remova o versionamento (opcional)
 ```sh
 rm -rf .git/
 ```
