@@ -7,6 +7,7 @@ use App\Enums\MediaTypes;
 use App\Models\Video as Model;
 use App\Repositories\Eloquent\Traits\VideoTrait;
 use App\Repositories\Presenters\PaginationPresenter;
+use Core\Domain\Builder\Video\UpdateVideoBuilder;
 use Core\Domain\Entity\{
     Entity,
     Video as VideoEntity
@@ -162,34 +163,33 @@ class VideoEloquentRepository implements VideoRepositoryInterface
             $entity->addCastMember($castMember->id);
         }
 
+        $builder = (new UpdateVideoBuilder())
+                        ->setEntity($entity);
+
         if ($trailer = $model->trailer) {
-            $entity->setTrailerFile(new ValueObjectMedia(
-                filePath: $trailer->file_path,
-                mediaStatus: MediaStatus::from($trailer->media_status),
-                encodedPath: $trailer->encoded_path
-            ));
+            $builder->addTrailer($trailer->file_path);
         }
 
         if ($mediaVideo = $model->media) {
-            $entity->setVideoFile(new ValueObjectMedia(
-                filePath: $mediaVideo->file_path,
+            $builder->addMediaVideo(
+                path: $mediaVideo->file_path,
                 mediaStatus: MediaStatus::from($mediaVideo->media_status),
                 encodedPath: $mediaVideo->encoded_path
-            ));
+            );
         }
 
         if ($banner = $model->banner) {
-            $entity->setBannerFile(new ValueObjectImage(path: $banner->path));
+            $builder->addBanner($banner->path);
         }
 
         if ($thumb = $model->thumb) {
-            $entity->setThumbFile(new ValueObjectImage(path: $thumb->path));
+            $builder->addThumb($thumb->path);
         }
 
         if ($thumbHalf = $model->thumbHalf) {
-            $entity->setThumbHalf(new ValueObjectImage(path: $thumbHalf->path));
+            $builder->addThumbHalf($thumbHalf->path);
         }
 
-        return $entity;
+        return $builder->getEntity();
     }
 }

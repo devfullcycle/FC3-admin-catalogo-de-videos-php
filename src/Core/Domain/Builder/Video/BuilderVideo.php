@@ -52,11 +52,12 @@ class BuilderVideo implements Builder
         }
     }
     
-    public function addMediaVideo(string $path, MediaStatus $mediaStatus): Builder
+    public function addMediaVideo(string $path, MediaStatus $mediaStatus, string $encodedPath = ''): Builder
     {
         $media = new Media(
             filePath: $path,
-            mediaStatus: $mediaStatus
+            mediaStatus: $mediaStatus,
+            encodedPath: $encodedPath
         );
         $this->entity->setVideoFile($media);
 
