@@ -9,10 +9,12 @@ use Core\Domain\Entity\{
     Entity,
     Video as VideoEntity
 };
+use Core\Domain\Enum\MediaStatus;
 use Core\Domain\Enum\Rating;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\PaginationInterface;
 use Core\Domain\Repository\VideoRepositoryInterface;
+use Core\Domain\ValueObject\Media as ValueObjectMedia;
 use Core\Domain\ValueObject\Uuid;
 
 class VideoEloquentRepository implements VideoRepositoryInterface
@@ -124,8 +126,8 @@ class VideoEloquentRepository implements VideoRepositoryInterface
                 'type' => MediaTypes::TRAILER->value,
             ]);
         }
-
-        return $entity;
+        
+        return $this->convertObjectToEntity($entityDb);
     }
 
     protected function syncRelationships(Model $model, Entity $entity)
@@ -157,6 +159,14 @@ class VideoEloquentRepository implements VideoRepositoryInterface
 
         foreach ($model->castMembers as $castMember) {
             $entity->addCastMember($castMember->id);
+        }
+
+        if ($trailer = $model->trailer) {
+            $entity->setTrailerFile(new ValueObjectMedia(
+                filePath: $trailer->file_path,
+                mediaStatus: MediaStatus::from($trailer->media_status),
+                encodedPath: $trailer->encoded_path
+            ));
         }
 
         return $entity;
