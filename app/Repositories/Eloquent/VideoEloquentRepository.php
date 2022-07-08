@@ -26,12 +26,9 @@ class VideoEloquentRepository implements VideoRepositoryInterface
 {
     use VideoTrait;
 
-    protected $model;
-
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        protected Model $model,
+    ) {}
 
     public function insert(Entity $entity): Entity
     {
