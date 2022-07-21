@@ -18,3 +18,4 @@ yarn-error.log
 /.composer
 /.vscode-server
 .gitconfig
+/storage/cloud
