@@ -60,5 +60,9 @@ class CreateVideoUseCaseTest extends TestCase
         $this->assertEquals($input->duration, $response->duration);
         $this->assertEquals($input->opened, $response->opened);
         $this->assertEquals($input->rating, $response->rating);
+
+        $this->assertCount(count($input->categories), $response->categories);
+        $this->assertCount(count($input->genres), $response->genres);
+        $this->assertCount(count($input->castMembers), $response->castMembers);
     }
 }
