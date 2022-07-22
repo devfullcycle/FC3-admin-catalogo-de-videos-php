@@ -24,8 +24,14 @@ use Tests\TestCase;
 
 class CreateVideoUseCaseTest extends TestCase
 {
-    public function test_create()
-    {
+    /**
+     * @dataProvider provider
+     */
+    public function test_create(
+        int $categories,
+        int $genres,
+        int $castMembers,
+    ) {
         $useCase = new CreateVideoUseCase(
             $this->app->make(VideoRepositoryInterface::class),
             $this->app->make(TransactionInterface::class),
@@ -37,9 +43,9 @@ class CreateVideoUseCaseTest extends TestCase
             $this->app->make(CastMemberRepositoryInterface::class)
         );
 
-        $categoriesIds = Category::factory()->count(3)->create()->pluck('id')->toArray();
-        $genresIds = Genre::factory()->count(3)->create()->pluck('id')->toArray();
-        $castMembersIds = CastMember::factory()->count(3)->create()->pluck('id')->toArray();
+        $categoriesIds = Category::factory()->count($categories)->create()->pluck('id')->toArray();
+        $genresIds = Genre::factory()->count($genres)->create()->pluck('id')->toArray();
+        $castMembersIds = CastMember::factory()->count($castMembers)->create()->pluck('id')->toArray();
 
         $fakeFile = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
         $file = [
@@ -71,14 +77,33 @@ class CreateVideoUseCaseTest extends TestCase
         $this->assertEquals($input->opened, $response->opened);
         $this->assertEquals($input->rating, $response->rating);
 
-        $this->assertCount(count($input->categories), $response->categories);
-        $this->assertCount(count($input->genres), $response->genres);
-        $this->assertCount(count($input->castMembers), $response->castMembers);
+        $this->assertCount($categories, $response->categories);
+        $this->assertEqualsCanonicalizing($input->categories, $response->categories);
+        $this->assertCount($genres, $response->genres);
+        $this->assertEqualsCanonicalizing($input->genres, $response->genres);
+        $this->assertCount($castMembers, $response->castMembers);
+        $this->assertEqualsCanonicalizing($input->castMembers, $response->castMembers);
 
         $this->assertNotNull($response->videoFile);
         $this->assertNull($response->trailerFile);
         $this->assertNull($response->bannerFile);
         $this->assertNull($response->thumbFile);
         $this->assertNull($response->thumbHalf);
+    }
+
+    protected function provider(): array
+    {
+        return [
+            'Test with all IDs' => [
+                'categories' => 3,
+                'genres' => 3,
+                'castMembers' => 3,
+            ], 
+            'Test with categories and genres' => [
+                'categories' => 3,
+                'genres' => 3,
+                'castMembers' => 0,
+            ], 
+        ];
     }
 }
