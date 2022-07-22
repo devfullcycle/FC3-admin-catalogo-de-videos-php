@@ -31,6 +31,11 @@ class CreateVideoUseCaseTest extends TestCase
         int $categories,
         int $genres,
         int $castMembers,
+        bool $withMediaVideo = false,
+        bool $withTrailer = false,
+        bool $withThumb = false,
+        bool $withThumbHalf = false,
+        bool $withBanner = false,
     ) {
         $useCase = new CreateVideoUseCase(
             $this->app->make(VideoRepositoryInterface::class),
@@ -65,7 +70,11 @@ class CreateVideoUseCaseTest extends TestCase
             categories: $categoriesIds,
             genres: $genresIds,
             castMembers: $castMembersIds,
-            videoFile: $file,
+            videoFile: $withMediaVideo ? $file : null,
+            trailerFile: $withTrailer ? $file : null,
+            bannerFile: $withBanner ? $file : null,
+            thumbFile: $withThumb ? $file : null,
+            thumbHalf: $withThumbHalf ? $file : null,
         );
 
         $response = $useCase->exec($input);
@@ -84,25 +93,50 @@ class CreateVideoUseCaseTest extends TestCase
         $this->assertCount($castMembers, $response->castMembers);
         $this->assertEqualsCanonicalizing($input->castMembers, $response->castMembers);
 
-        $this->assertNotNull($response->videoFile);
-        $this->assertNull($response->trailerFile);
-        $this->assertNull($response->bannerFile);
-        $this->assertNull($response->thumbFile);
-        $this->assertNull($response->thumbHalf);
+        $this->assertTrue($withMediaVideo ? $response->videoFile !== null : $response->videoFile === null);
+        $this->assertTrue($withTrailer ? $response->trailerFile !== null : $response->trailerFile === null);
+        $this->assertTrue($withBanner ? $response->bannerFile !== null : $response->bannerFile === null);
+        $this->assertTrue($withThumb ? $response->thumbFile !== null : $response->thumbFile === null);
+        $this->assertTrue($withThumbHalf ? $response->thumbHalf !== null : $response->thumbHalf === null);
     }
 
     protected function provider(): array
     {
         return [
-            'Test with all IDs' => [
+            'Test with all IDs and media video' => [
                 'categories' => 3,
                 'genres' => 3,
                 'castMembers' => 3,
+                'withMediaVideo' => true,
+                'withTrailer' => false,
+                'withThumb' => false,
+                'withThumbHalf' => false,
+                'withBanner' => false,
             ], 
-            'Test with categories and genres' => [
+            'Test with categories and genres and without files' => [
                 'categories' => 3,
                 'genres' => 3,
                 'castMembers' => 0,
+            ], 
+            'Test with all IDs and all medias' => [
+                'categories' => 2,
+                'genres' => 2,
+                'castMembers' => 2,
+                'withMediaVideo' => true,
+                'withTrailer' => true,
+                'withThumb' => true,
+                'withThumbHalf' => true,
+                'withBanner' => true,
+            ], 
+            'Test without IDs and all medias' => [
+                'categories' => 0,
+                'genres' => 0,
+                'castMembers' => 0,
+                'withMediaVideo' => true,
+                'withTrailer' => true,
+                'withThumb' => true,
+                'withThumbHalf' => true,
+                'withBanner' => true,
             ], 
         ];
     }
