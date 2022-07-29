@@ -31,6 +31,7 @@ class UpdateVideoUseCase extends BaseVideoUseCase
         );
 
         $this->builder->setEntity($entity);
+        $this->builder->addIds($input);
 
         try {
             $this->repository->update($this->builder->getEntity());
