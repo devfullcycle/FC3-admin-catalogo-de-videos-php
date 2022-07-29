@@ -4,8 +4,11 @@ use App\Http\Controllers\Api\{
     CastMemberController,
     CategoryController,
     GenreController,
+    VideoController,
 };
 use Illuminate\Support\Facades\Route;
+
+Route::apiResource('/videos', VideoController::class);
 
 Route::apiResource('/categories', CategoryController::class);
 Route::apiResource(
