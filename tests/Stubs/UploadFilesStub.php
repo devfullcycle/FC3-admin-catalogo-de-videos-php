@@ -6,6 +6,11 @@ use Core\UseCase\Interfaces\FileStorageInterface;
 
 class UploadFilesStub implements FileStorageInterface
 {
+    public function __construct()
+    {
+        event($this);
+    }
+
     /**
      * @param string $path
      * @param array $_FILES[file]
