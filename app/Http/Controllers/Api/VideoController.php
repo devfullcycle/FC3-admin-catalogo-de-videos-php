@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
+use Core\Domain\Enum\Rating;
+use Core\UseCase\Video\Create\CreateVideoUseCase;
+use Core\UseCase\Video\Create\DTO\CreateInputVideoDTO;
 use Core\UseCase\Video\List\{
     DTO\ListInputVideoUseCase,
     ListVideoUseCase
@@ -13,6 +16,7 @@ use Core\UseCase\Video\Paginate\{
     ListVideosUseCase,
 };
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class VideoController extends Controller
 {
@@ -46,5 +50,24 @@ class VideoController extends Controller
         $response = $useCase->exec(new ListInputVideoUseCase($id));
 
         return new VideoResource($response);
+    }
+
+    public function store(CreateVideoUseCase $useCase, Request $request)
+    {
+        $response = $useCase->exec(new CreateInputVideoDTO(
+            title: $request->title,
+            description: $request->description,
+            yearLaunched: $request->year_launched,
+            duration: $request->duration,
+            opened: $request->opened,
+            rating: Rating::from($request->rating),
+            categories: $request->categories,
+            genres: $request->genres,
+            castMembers: $request->cast_members,
+        ));
+
+        return (new VideoResource($response))
+                    ->response()
+                    ->setStatusCode(Response::HTTP_CREATED);
     }
 }
