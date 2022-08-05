@@ -32,7 +32,14 @@ class VideoApiTest extends TestCase
         int $perPage = 15,
     ) {
         Video::factory()->count($total)->create();
-        $response = $this->getJson($this->endpoint);
+
+        $params = http_build_query([
+            'page' => $page,
+            'per_page' => $perPage,
+            'order' => 'DESC',
+        ]);
+
+        $response = $this->getJson("$this->endpoint?$params");
         
         $response->assertOk();
         $response->assertJsonCount($totalCurrentPage, 'data');
@@ -68,7 +75,7 @@ class VideoApiTest extends TestCase
         return [
             'test empty' => [
                 'total' => 0,
-                'totalCurrentPage' => 10,
+                'totalCurrentPage' => 0,
                 'page' => 1,
                 'perPage' => 15,
             ], 
@@ -78,12 +85,18 @@ class VideoApiTest extends TestCase
                 'page' => 1,
                 'perPage' => 15,
             ], 
-            [
-                'total' => 10,
-                'totalCurrentPage' => 10,
-                'page' => 1,
+            'test page two' => [
+                'total' => 20,
+                'totalCurrentPage' => 5,
+                'page' => 2,
                 'perPage' => 15,
-            ]
+            ],
+            'test page four' => [
+                'total' => 40,
+                'totalCurrentPage' => 10,
+                'page' => 4,
+                'perPage' => 10,
+            ],
         ];
     }
 }
