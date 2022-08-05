@@ -30,13 +30,21 @@ class VideoApiTest extends TestCase
         int $totalCurrentPage,
         int $page = 1,
         int $perPage = 15,
+        string $filter = '',
     ) {
         Video::factory()->count($total)->create();
+
+        if ($filter) {
+            Video::factory()->count($total)->create([
+                'title' => $filter
+            ]);
+        }
 
         $params = http_build_query([
             'page' => $page,
             'per_page' => $perPage,
             'order' => 'DESC',
+            'filter' => $filter
         ]);
 
         $response = $this->getJson("$this->endpoint?$params");
@@ -96,6 +104,13 @@ class VideoApiTest extends TestCase
                 'totalCurrentPage' => 10,
                 'page' => 4,
                 'perPage' => 10,
+            ],
+            'test with filter' => [
+                'total' => 10,
+                'totalCurrentPage' => 10,
+                'page' => 1,
+                'perPage' => 10,
+                'filter' => 'test',
             ],
         ];
     }
