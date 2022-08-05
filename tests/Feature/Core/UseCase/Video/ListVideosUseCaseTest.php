@@ -4,10 +4,10 @@ namespace Tests\Feature\Core\UseCase\Video;
 
 use App\Models\Video;
 use Core\Domain\Repository\VideoRepositoryInterface;
-use Core\UseCase\Video\Paginate\DTO\PaginateInputVideoDTO;
-use Core\UseCase\Video\Paginate\ListVideosUseCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Core\UseCase\Video\Paginate\{
+    DTO\PaginateInputVideoDTO,
+    ListVideosUseCase
+};
 use Tests\TestCase;
 
 class ListVideosUseCaseTest extends TestCase

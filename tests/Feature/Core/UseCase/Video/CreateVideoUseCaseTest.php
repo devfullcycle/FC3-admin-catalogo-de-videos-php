@@ -3,14 +3,10 @@
 namespace Tests\Feature\Core\UseCase\Video;
 
 use Core\Domain\Enum\Rating;
-use Core\UseCase\Video\Create\CreateVideoUseCase;
-use Core\UseCase\Video\Create\DTO\CreateInputVideoDTO;
-use Exception;
-use Illuminate\Database\Events\TransactionBeginning;
-use Illuminate\Support\Facades\Event;
-use Tests\Stubs\UploadFilesStub;
-use Tests\Stubs\VideoEventStub;
-use Throwable;
+use Core\UseCase\Video\Create\{
+    CreateVideoUseCase,
+    DTO\CreateInputVideoDTO
+};
 
 class CreateVideoUseCaseTest extends BaseVideoUseCase
 {

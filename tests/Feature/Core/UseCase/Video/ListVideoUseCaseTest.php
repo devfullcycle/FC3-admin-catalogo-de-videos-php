@@ -5,10 +5,10 @@ namespace Tests\Feature\Core\UseCase\Video;
 use App\Models\Video;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\VideoRepositoryInterface;
-use Core\UseCase\Video\List\DTO\ListInputVideoUseCase;
-use Core\UseCase\Video\List\ListVideoUseCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Core\UseCase\Video\List\{
+    DTO\ListInputVideoUseCase,
+    ListVideoUseCase
+};
 use Tests\TestCase;
 
 class ListVideoUseCaseTest extends TestCase

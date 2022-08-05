@@ -7,26 +7,23 @@ use App\Models\{
     Category,
     Genre
 };
-use Core\Domain\Enum\Rating;
-use Core\Domain\Repository\CastMemberRepositoryInterface;
-use Core\Domain\Repository\CategoryRepositoryInterface;
-use Core\Domain\Repository\GenreRepositoryInterface;
-use Core\Domain\Repository\VideoRepositoryInterface;
-use Core\UseCase\Interfaces\FileStorageInterface;
+use Core\Domain\Repository\{
+    CastMemberRepositoryInterface,
+    CategoryRepositoryInterface,
+    GenreRepositoryInterface,
+    VideoRepositoryInterface
+};
 use Core\UseCase\Interfaces\TransactionInterface;
-use Core\UseCase\Video\Create\CreateVideoUseCase;
-use Core\UseCase\Video\Create\DTO\CreateInputVideoDTO;
-use Core\UseCase\Video\Interfaces\VideoEventManagerInterface;
-use Exception;
 use Illuminate\Database\Events\TransactionBeginning;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
-use Tests\Stubs\UploadFilesStub;
-use Tests\Stubs\VideoEventStub;
+use Tests\Stubs\{
+    UploadFilesStub,
+    VideoEventStub
+};
 use Tests\TestCase;
 use Throwable;
+use Exception;
 
 abstract class BaseVideoUseCase extends TestCase
 {

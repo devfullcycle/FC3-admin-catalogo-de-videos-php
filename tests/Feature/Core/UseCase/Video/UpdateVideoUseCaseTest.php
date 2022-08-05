@@ -3,9 +3,10 @@
 namespace Tests\Feature\Core\UseCase\Video;
 
 use App\Models\Video;
-use Core\Domain\Enum\Rating;
-use Core\UseCase\Video\Update\DTO\UpdateInputVideoDTO;
-use Core\UseCase\Video\Update\UpdateVideoUseCase;
+use Core\UseCase\Video\Update\{
+    DTO\UpdateInputVideoDTO,
+    UpdateVideoUseCase
+};
 
 class UpdateVideoUseCaseTest extends BaseVideoUseCase
 {
