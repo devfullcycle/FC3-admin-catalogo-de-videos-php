@@ -11,6 +11,16 @@ use Tests\TestCase;
 class VideoApiTest extends TestCase
 {
     protected $endpoint = '/api/videos';
+    protected $serializedFields = [
+        'id',
+        'title',
+        'description',
+        'year_launched',
+        'opened',
+        'rating',
+        'duration',
+        'created_at',
+    ];
     
     /**
      * @test
@@ -55,16 +65,7 @@ class VideoApiTest extends TestCase
         $response->assertJsonPath('meta.per_page', $perPage);
         $response->assertJsonStructure([
             'data' => [
-                '*' => [
-                    'id',
-                    'title',
-                    'description',
-                    'year_launched',
-                    'opened',
-                    'rating',
-                    'duration',
-                    'created_at',
-                ]
+                '*' => $this->serializedFields
             ], 
             'meta' => [
                 'total',
@@ -113,5 +114,19 @@ class VideoApiTest extends TestCase
                 'filter' => 'test',
             ],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function show()
+    {
+        $video = Video::factory()->create();
+
+        $response = $this->getJson("$this->endpoint/{$video->id}");
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'data' => $this->serializedFields
+        ]);
     }
 }

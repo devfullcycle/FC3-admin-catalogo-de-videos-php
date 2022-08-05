@@ -18,11 +18,11 @@ class VideoResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'year_launched' => $this->year_launched,
+            'year_launched' => $this->year_launched ?? $this->yearLaunched,
             'opened' => $this->opened,
             'rating' => $this->rating,
             'duration' => $this->duration,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at ?? $this->createdAt,
         ];
     }
 }
