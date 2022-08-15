@@ -23,6 +23,7 @@ class VideoResource extends JsonResource
             'rating' => $this->rating,
             'duration' => $this->duration,
             'created_at' => $this->created_at ?? $this->createdAt,
+            'video' => $this->videoFile ?? '',
         ];
     }
 }
