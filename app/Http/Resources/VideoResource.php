@@ -25,6 +25,9 @@ class VideoResource extends JsonResource
             'created_at' => $this->created_at ?? $this->createdAt,
             'video' => $this->videoFile ?? '',
             'trailer' => $this->trailerFile ?? '',
+            'banner' => $this->bannerFile ?? '',
+            'thumb' => $this->thumbFile ?? '',
+            'thumb_half' => $this->thumbHalfFile ?? '',
         ];
     }
 }

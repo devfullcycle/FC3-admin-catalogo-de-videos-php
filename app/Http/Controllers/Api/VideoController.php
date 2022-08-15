@@ -54,7 +54,7 @@ class VideoController extends Controller
 
     public function store(CreateVideoUseCase $useCase, Request $request)
     {
-        if ($file = $request->file('video')) {
+        if ($file = $request->file('video_file')) {
             $videoFile = [
                 'name' => $file->getClientOriginalName(),
                 'tmp_name' => $file->getPathname(),
@@ -64,8 +64,38 @@ class VideoController extends Controller
             ];
         }
 
-        if ($file = $request->file('trailer')) {
+        if ($file = $request->file('trailer_file')) {
             $trailerFile = [
+                'name' => $file->getClientOriginalName(),
+                'tmp_name' => $file->getPathname(),
+                'size' => $file->getSize(),
+                'error' => $file->getError(),
+                'type' => $file->getType(),
+            ];
+        }
+
+        if ($file = $request->file('banner_file')) {
+            $bannerFile = [
+                'name' => $file->getClientOriginalName(),
+                'tmp_name' => $file->getPathname(),
+                'size' => $file->getSize(),
+                'error' => $file->getError(),
+                'type' => $file->getType(),
+            ];
+        }
+
+        if ($file = $request->file('thumb_file')) {
+            $thumbFile = [
+                'name' => $file->getClientOriginalName(),
+                'tmp_name' => $file->getPathname(),
+                'size' => $file->getSize(),
+                'error' => $file->getError(),
+                'type' => $file->getType(),
+            ];
+        }
+
+        if ($file = $request->file('thumb_half_file')) {
+            $thumbHalfFile = [
                 'name' => $file->getClientOriginalName(),
                 'tmp_name' => $file->getPathname(),
                 'size' => $file->getSize(),
@@ -86,6 +116,9 @@ class VideoController extends Controller
             castMembers: $request->cast_members,
             videoFile: $videoFile ?? null,
             trailerFile: $trailerFile ?? null,
+            bannerFile: $bannerFile ?? null,
+            thumbFile: $thumbFile ?? null,
+            thumbHalf: $thumbHalfFile ?? null,
         ));
 
         return (new VideoResource($response))
