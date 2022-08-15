@@ -6,6 +6,8 @@ use App\Models\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class VideoApiTest extends TestCase
@@ -144,6 +146,8 @@ class VideoApiTest extends TestCase
      */
     public function store()
     {
+        $videoFile = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
+
         $data = [
             'title' => 'test title',
             'description' => 'test desc',
@@ -154,6 +158,7 @@ class VideoApiTest extends TestCase
             'categories' => [],
             'genres' => [],
             'cast_members' => [],
+            'video_file' => $videoFile
         ];
         $response = $this->postJson($this->endpoint, $data);
         $response->assertCreated();
@@ -165,5 +170,7 @@ class VideoApiTest extends TestCase
         $this->assertDatabaseHas('videos', [
             'id' => $response->json('data.id'),
         ]);
+
+        Storage::assertExists($response->json('data.video'));
     }
 }
