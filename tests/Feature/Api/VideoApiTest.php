@@ -2,7 +2,12 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\Video;
+use App\Models\{
+    CastMember,
+    Category,
+    Genre,
+    Video
+};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
@@ -149,6 +154,10 @@ class VideoApiTest extends TestCase
         $mediaVideoFile = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
         $imageVideoFile = UploadedFile::fake()->image('image.png');
 
+        $categoriesIds = Category::factory()->count(3)->create()->pluck('id')->toArray();
+        $genresIds = Genre::factory()->count(3)->create()->pluck('id')->toArray();
+        $castMembersIds = CastMember::factory()->count(3)->create()->pluck('id')->toArray();
+
         $data = [
             'title' => 'test title',
             'description' => 'test desc',
@@ -156,9 +165,9 @@ class VideoApiTest extends TestCase
             'duration' => 1,
             'rating' => 'L',
             'opened' => true,
-            'categories' => [],
-            'genres' => [],
-            'cast_members' => [],
+            'categories' => $categoriesIds,
+            'genres' => $genresIds,
+            'cast_members' => $castMembersIds,
             'video_file' => $mediaVideoFile,
             'trailer_file' => $mediaVideoFile,
             'banner_file' => $imageVideoFile,
@@ -176,6 +185,10 @@ class VideoApiTest extends TestCase
             'id' => $response->json('data.id'),
         ]);
 
+        $this->assertEquals($categoriesIds, $response->json('data.categories'));
+        $this->assertEquals($genresIds, $response->json('data.genres'));
+        $this->assertEquals($castMembersIds, $response->json('data.cast_members'));
+
         Storage::assertExists($response->json('data.video'));
         Storage::assertExists($response->json('data.trailer'));
         Storage::assertExists($response->json('data.banner'));
@@ -183,5 +196,27 @@ class VideoApiTest extends TestCase
         Storage::assertExists($response->json('data.thumb_half'));
 
         Storage::deleteDirectory($response->json('data.id'));
+    }
+
+    /**
+     * @test
+     */
+    // #[Test]
+    public function storeValidation()
+    {
+        $response = $this->postJson($this->endpoint, []);
+
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrors([
+            'title',
+            'description',
+            'year_launched',
+            'duration',
+            'rating',
+            'opened',
+            'categories',
+            'genres',
+            'cast_members',
+        ]);
     }
 }

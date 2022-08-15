@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreVideoRequest;
 use App\Http\Resources\VideoResource;
 use Core\Domain\Enum\Rating;
 use Core\UseCase\Video\Create\CreateVideoUseCase;
@@ -52,7 +53,7 @@ class VideoController extends Controller
         return new VideoResource($response);
     }
 
-    public function store(CreateVideoUseCase $useCase, Request $request)
+    public function store(CreateVideoUseCase $useCase, StoreVideoRequest $request)
     {
         if ($file = $request->file('video_file')) {
             $videoFile = [

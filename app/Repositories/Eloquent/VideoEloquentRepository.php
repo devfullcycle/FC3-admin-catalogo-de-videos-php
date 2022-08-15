@@ -84,7 +84,10 @@ class VideoEloquentRepository implements VideoRepositoryInterface
                             'trailer',
                             'banner',
                             'thumb',
-                            'thumbHalf'
+                            'thumbHalf',
+                            'categories',
+                            'castMembers',
+                            'genres'
                         ])
                         ->orderBy('title', $order)
                         ->paginate($totalPage, ['*'], 'page', $page);
