@@ -46,7 +46,7 @@ class VideoController extends Controller
     {
         $response = $useCase->exec(new ListInputVideoUseCase($id));
 
-        return new VideoResource($response);
+        return ApiAdapter::json($response);
     }
 
     public function store(CreateVideoUseCase $useCase, StoreVideoRequest $request)

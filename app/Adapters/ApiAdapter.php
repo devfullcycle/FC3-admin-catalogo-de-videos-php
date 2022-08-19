@@ -8,11 +8,16 @@ use Core\Domain\Repository\PaginationInterface;
 class ApiAdapter
 {
     public function __construct(
+        // private ?PaginationInterface $response = null
         private PaginationInterface $response
     ) {}
 
     public function toJson()
     {
+        // if (!$this->response) {
+        //     throw new \Exception('Response is null');
+        // }
+
         return DefaultResource::collection($this->response->items())
                                 ->additional([
                                     'meta' => [
@@ -30,5 +35,10 @@ class ApiAdapter
     public function toXml()
     {
         // 
+    }
+
+    public static function json(object $data)
+    {
+        return new DefaultResource($data);
     }
 }

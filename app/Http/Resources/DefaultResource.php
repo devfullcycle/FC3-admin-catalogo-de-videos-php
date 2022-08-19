@@ -14,6 +14,13 @@ class DefaultResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->resource;
+        return collect($this->resource)
+                    ->mapWithKeys(function ($value, $key) {
+                        $key = trim(strtolower(preg_replace('/[A-Z]/', '_$0', $key )));
+
+                        return [
+                            $key => $value
+                        ];
+                    });
     }
 }
