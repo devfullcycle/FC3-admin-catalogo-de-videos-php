@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Adapters\ApiAdapter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVideoRequest;
 use App\Http\Requests\UpdateVideoRequest;
@@ -37,18 +38,8 @@ class VideoController extends Controller
             )
         );
 
-        return VideoResource::collection(collect($response->items()))
-                                    ->additional([
-                                        'meta' => [
-                                            'total' => $response->total(),
-                                            'current_page' => $response->currentPage(),
-                                            'last_page' => $response->lastPage(),
-                                            'first_page' => $response->firstPage(),
-                                            'per_page' => $response->perPage(),
-                                            'to' => $response->to(),
-                                            'from' => $response->from(),
-                                        ]
-                                    ]);
+        return (new ApiAdapter($response))
+                    ->toJson();
     }
 
     public function show(ListVideoUseCase $useCase, $id)
