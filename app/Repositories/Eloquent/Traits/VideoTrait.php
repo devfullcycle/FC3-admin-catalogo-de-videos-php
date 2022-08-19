@@ -15,9 +15,9 @@ trait VideoTrait
             $action = $model->media()->first() ? 'update' : 'create';
             $model->media()->{$action}([
                 'file_path' => $mediaVideo->filePath,
-                'media_status' => $mediaVideo->mediaStatus->value,
+                'media_status' => (string) $mediaVideo->mediaStatus->value,
                 'encoded_path' => $mediaVideo->encodedPath,
-                'type' => MediaTypes::VIDEO->value,
+                'type' => (string) MediaTypes::VIDEO->value,
             ]);
         }
     }
@@ -28,9 +28,9 @@ trait VideoTrait
             $action = $model->trailer()->first() ? 'update' : 'create';
             $model->trailer()->{$action}([
                 'file_path' => $trailer->filePath,
-                'media_status' => $trailer->mediaStatus->value,
+                'media_status' => (string) $trailer->mediaStatus->value,
                 'encoded_path' => $trailer->encodedPath,
-                'type' => MediaTypes::TRAILER->value,
+                'type' => (string) MediaTypes::TRAILER->value,
             ]);
         }
     }
@@ -41,7 +41,7 @@ trait VideoTrait
             $action = $model->banner()->first() ? 'update' : 'create';
             $model->banner()->{$action}([
                 'path' => $banner->path(),
-                'type' => ImageTypes::BANNER->value,
+                'type' => (string) ImageTypes::BANNER->value,
             ]);
         }
     }
@@ -52,7 +52,7 @@ trait VideoTrait
             $action = $model->thumb()->first() ? 'update' : 'create';
             $model->thumb()->{$action}([
                 'path' => $thumb->path(),
-                'type' => ImageTypes::THUMB->value,
+                'type' => (string) ImageTypes::THUMB->value,
             ]);
         }
     }
@@ -63,7 +63,7 @@ trait VideoTrait
             $action = $model->thumbHalf()->first() ? 'update' : 'create';
             $model->thumbHalf()->{$action}([
                 'path' => $thumbHalf->path(),
-                'type' => ImageTypes::THUMB_HALF->value,
+                'type' => (string) ImageTypes::THUMB_HALF->value,
             ]);
         }
     }
