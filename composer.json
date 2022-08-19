@@ -27,7 +27,10 @@
             "Core\\": "src/Core/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
