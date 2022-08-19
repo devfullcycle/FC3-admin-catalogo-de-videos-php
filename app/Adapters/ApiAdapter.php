@@ -37,8 +37,10 @@ class ApiAdapter
         // 
     }
 
-    public static function json(object $data)
+    public static function json(object $data, int $statusCode = 200)
     {
-        return new DefaultResource($data);
+        return (new DefaultResource($data))
+                ->response()
+                ->setStatusCode($statusCode);
     }
 }
