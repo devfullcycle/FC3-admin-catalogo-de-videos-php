@@ -16,6 +16,8 @@ use App\Repositories\Transaction\DBTransaction;
 use App\Services\{
     Storage\FileStorage
 };
+use App\Services\AMQP\AMQPInterface;
+use App\Services\AMQP\PhpAmqpService;
 use Core\Domain\Repository\{
     CastMemberRepositoryInterface,
     CategoryRepositoryInterface,
@@ -55,6 +57,14 @@ class CleanArchServiceProvider extends ServiceProvider
         $this->app->bind(
             TransactionInterface::class,
             DBTransaction::class,
+        );
+
+        /**
+         * Services
+         */
+        $this->app->bind(
+            AMQPInterface::class,
+            PhpAmqpService::class,
         );
     }
 
