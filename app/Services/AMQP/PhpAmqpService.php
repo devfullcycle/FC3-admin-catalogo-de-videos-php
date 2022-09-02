@@ -77,6 +77,11 @@ class PhpAmqpService implements AMQPInterface
             routing_key: config('microservices.queue_name')
         );
 
+        $this->channel->basic_consume(
+            queue: $queue,
+            callback: $callback
+        );
+
         while ($this->channel->is_consuming()) {
             $this->channel->wait();
         }
