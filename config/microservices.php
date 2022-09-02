@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'queue_name' => env('micro_catalog'),
+    'queue_name' => env('RABBITMQ_QUEUE'),
     
     'rabbitmq' => [
         'hosts' => [
@@ -17,6 +17,7 @@ return [
 
     'micro_encoder_go' => [
         'exchange' => 'dlx',
-        'queue_name' => 'video'
+        'queue_name' => 'video',
+        'exchange_producer' => 'amq.direct',
     ]
 ];
