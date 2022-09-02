@@ -10,6 +10,7 @@
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "php-amqplib/php-amqplib": "^3.2",
         "rakit/validation": "^1.4",
         "spatie/laravel-google-cloud-storage": "^2.0"
     },
