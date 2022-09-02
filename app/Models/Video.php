@@ -49,30 +49,30 @@ class Video extends Model
     public function media()
     {
         return $this->hasOne(Media::class)
-                        ->where('type', MediaTypes::VIDEO->value);
+                        ->where('type', (string) MediaTypes::VIDEO->value);
     }
 
     public function trailer()
     {
         return $this->hasOne(Media::class)
-                        ->where('type', MediaTypes::TRAILER->value);
+                        ->where('type', (string) MediaTypes::TRAILER->value);
     }
 
     public function banner()
     {
         return $this->hasOne(ImageVideo::class)
-                        ->where('type', ImageTypes::BANNER->value);
+                        ->where('type', (string) ImageTypes::BANNER->value);
     }
 
     public function thumb()
     {
         return $this->hasOne(ImageVideo::class)
-                        ->where('type', ImageTypes::THUMB->value);
+                        ->where('type', (string) ImageTypes::THUMB->value);
     }
 
     public function thumbHalf()
     {
         return $this->hasOne(ImageVideo::class)
-                        ->where('type', ImageTypes::THUMB_HALF->value);
+                        ->where('type', (string) ImageTypes::THUMB_HALF->value);
     }
 }
