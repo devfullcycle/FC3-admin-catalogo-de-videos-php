@@ -6,11 +6,12 @@ use App\Http\Controllers\Api\{
     GenreController,
     VideoController,
 };
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth:api', 'can:admin-catalog'])->group(function () {
     Route::get('/me', function () {
-        return true;
+        return 'success';
     });
 });
 
