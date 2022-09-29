@@ -14,7 +14,7 @@ class PhpAmqpService implements AMQPInterface
 
     public function __construct()
     {
-        if ($this->connection) {
+        if ($this->connection || app()->runningInConsole()) {
             return;
         }
 
