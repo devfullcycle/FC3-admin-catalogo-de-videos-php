@@ -8,6 +8,12 @@ use App\Http\Controllers\Api\{
 };
 use Illuminate\Support\Facades\Route;
 
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('/me', function () {
+        return true;
+    });
+});
+
 Route::apiResource('/videos', VideoController::class);
 
 Route::apiResource('/categories', CategoryController::class);
