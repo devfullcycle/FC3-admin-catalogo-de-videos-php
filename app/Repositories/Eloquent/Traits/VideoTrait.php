@@ -4,7 +4,7 @@ namespace App\Repositories\Eloquent\Traits;
 
 use App\Enums\ImageTypes;
 use App\Enums\MediaTypes;
-use Core\Domain\Entity\Video as Entity;;
+use Core\Domain\Entity\Video as Entity;
 use Illuminate\Database\Eloquent\Model;
 
 trait VideoTrait

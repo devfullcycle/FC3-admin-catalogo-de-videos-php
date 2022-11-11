@@ -20,7 +20,7 @@ class ListCategoryUseCaseUnitTest extends TestCase
 
         $this->mockEntity = Mockery::mock(CategoryEntity::class, [
             $id,
-            'teste category'
+            'teste category',
         ]);
         $this->mockEntity->shouldReceive('id')->andReturn($id);
         $this->mockEntity->shouldReceive('createdAt')->andReturn(date('Y-m-d H:i:s'));

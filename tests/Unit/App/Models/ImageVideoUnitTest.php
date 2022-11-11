@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\ImageVideo;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class ImageVideoUnitTest extends ModelTestCase
 {
@@ -21,7 +21,7 @@ class ImageVideoUnitTest extends ModelTestCase
             UuidTrait::class,
         ];
     }
-    
+
     protected function fillables(): array
     {
         return [
@@ -35,7 +35,7 @@ class ImageVideoUnitTest extends ModelTestCase
         return [
             'id' => 'string',
             'is_active' => 'boolean',
-            'deleted_at' => 'datetime'
+            'deleted_at' => 'datetime',
         ];
     }
 }

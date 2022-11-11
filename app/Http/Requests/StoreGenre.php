@@ -27,7 +27,7 @@ class StoreGenre extends FormRequest
             'name' => [
                 'required',
                 'min:3',
-                'max:255'
+                'max:255',
             ],
             'is_active' => [
                 'nullable',
@@ -37,7 +37,7 @@ class StoreGenre extends FormRequest
                 'required',
                 'array',
                 'exists:categories,id,deleted_at,NULL',
-            ]
+            ],
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Media;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class MediaUnitTest extends ModelTestCase
 {
@@ -21,7 +21,7 @@ class MediaUnitTest extends ModelTestCase
             UuidTrait::class,
         ];
     }
-    
+
     protected function fillables(): array
     {
         return [
@@ -37,7 +37,7 @@ class MediaUnitTest extends ModelTestCase
         return [
             'id' => 'string',
             'is_active' => 'boolean',
-            'deleted_at' => 'datetime'
+            'deleted_at' => 'datetime',
         ];
     }
 }

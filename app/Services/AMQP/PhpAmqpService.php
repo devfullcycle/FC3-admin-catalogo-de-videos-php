@@ -10,6 +10,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 class PhpAmqpService implements AMQPInterface
 {
     protected $connection = null;
+
     protected $channel = null;
 
     public function __construct()
@@ -54,7 +55,7 @@ class PhpAmqpService implements AMQPInterface
         );
 
         $message = new AMQPMessage(json_encode($payload), [
-            'content_type' => 'text/plain'
+            'content_type' => 'text/plain',
         ]);
 
         $this->channel->basic_publish($message, $exchange);

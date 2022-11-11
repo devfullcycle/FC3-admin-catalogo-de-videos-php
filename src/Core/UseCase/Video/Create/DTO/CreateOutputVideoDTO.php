@@ -23,5 +23,6 @@ class CreateOutputVideoDTO
         public ?string $thumbFile = null,
         public ?string $thumbHalf = null,
         public ?string $bannerFile = null,
-    ) {}
+    ) {
+    }
 }

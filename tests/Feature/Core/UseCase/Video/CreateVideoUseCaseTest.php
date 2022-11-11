@@ -3,10 +3,8 @@
 namespace Tests\Feature\Core\UseCase\Video;
 
 use Core\Domain\Enum\Rating;
-use Core\UseCase\Video\Create\{
-    CreateVideoUseCase,
-    DTO\CreateInputVideoDTO
-};
+use Core\UseCase\Video\Create\CreateVideoUseCase;
+use Core\UseCase\Video\Create\DTO\CreateInputVideoDTO;
 
 class CreateVideoUseCaseTest extends BaseVideoUseCase
 {
@@ -14,7 +12,7 @@ class CreateVideoUseCaseTest extends BaseVideoUseCase
     {
         return CreateVideoUseCase::class;
     }
-    
+
     public function inputDTO(
         array $categories = [],
         array $genres = [],
@@ -24,8 +22,7 @@ class CreateVideoUseCaseTest extends BaseVideoUseCase
         ?array $bannerFile = null,
         ?array $thumbFile = null,
         ?array $thumbHalf = null,
-    ): object
-    {
+    ): object {
         return new CreateInputVideoDTO(
             title: 'test',
             description: 'test',

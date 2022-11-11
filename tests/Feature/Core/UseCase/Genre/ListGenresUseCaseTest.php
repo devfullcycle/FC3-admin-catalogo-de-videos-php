@@ -6,8 +6,6 @@ use App\Models\Genre;
 use App\Repositories\Eloquent\GenreEloquentRepository;
 use Core\UseCase\DTO\Genre\List\ListGenresInputDto;
 use Core\UseCase\Genre\ListGenresUseCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ListGenresUseCaseTest extends TestCase

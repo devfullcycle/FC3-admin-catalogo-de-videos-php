@@ -16,5 +16,6 @@ class UpdateInputVideoDTO
         public ?array $thumbFile = null,
         public ?array $thumbHalf = null,
         public ?array $bannerFile = null,
-    ) {}
+    ) {
+    }
 }

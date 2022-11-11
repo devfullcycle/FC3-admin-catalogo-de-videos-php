@@ -6,20 +6,15 @@ use App\Adapters\ApiAdapter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVideoRequest;
 use App\Http\Requests\UpdateVideoRequest;
-use App\Http\Resources\VideoResource;
 use Core\Domain\Enum\Rating;
 use Core\UseCase\Video\Create\CreateVideoUseCase;
 use Core\UseCase\Video\Create\DTO\CreateInputVideoDTO;
 use Core\UseCase\Video\Delete\DeleteVideoUseCase;
 use Core\UseCase\Video\Delete\DTO\DeleteInputVideoDTO;
-use Core\UseCase\Video\List\{
-    DTO\ListInputVideoUseCase,
-    ListVideoUseCase
-};
-use Core\UseCase\Video\Paginate\{
-    DTO\PaginateInputVideoDTO,
-    ListVideosUseCase,
-};
+use Core\UseCase\Video\List\DTO\ListInputVideoUseCase;
+use Core\UseCase\Video\List\ListVideoUseCase;
+use Core\UseCase\Video\Paginate\DTO\PaginateInputVideoDTO;
+use Core\UseCase\Video\Paginate\ListVideosUseCase;
 use Core\UseCase\Video\Update\DTO\UpdateInputVideoDTO;
 use Core\UseCase\Video\Update\UpdateVideoUseCase;
 use Illuminate\Http\Request;

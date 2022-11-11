@@ -35,12 +35,13 @@ class GenreEloquentRepository implements GenreRepositoryInterface
 
         return $this->toGenre($genreDb);
     }
-    
+
     public function findById(string $genreId): Entity
     {
-        if (!$genreDb = $this->model->find($genreId)) {
+        if (! $genreDb = $this->model->find($genreId)) {
             throw new NotFoundException("Genre {$genreId} not found");
         }
+
         return $this->toGenre($genreDb);
     }
 
@@ -51,7 +52,7 @@ class GenreEloquentRepository implements GenreRepositoryInterface
                     ->pluck('id')
                     ->toArray();
     }
-    
+
     public function findAll(string $filter = '', $order = 'DESC'): array
     {
         $result = $this->model
@@ -65,7 +66,7 @@ class GenreEloquentRepository implements GenreRepositoryInterface
 
         return $result->toArray();
     }
-    
+
     public function paginate(string $filter = '', $order = 'DESC', int $page = 1, int $totalPage = 15): PaginationInterface
     {
         $result = $this->model
@@ -79,15 +80,15 @@ class GenreEloquentRepository implements GenreRepositoryInterface
 
         return new PaginationPresenter($result);
     }
-    
+
     public function update(Entity $genre): Entity
     {
-        if (!$genreDb = $this->model->find($genre->id)) {
+        if (! $genreDb = $this->model->find($genre->id)) {
             throw new NotFoundException("Genre {$genre->id} not found");
         }
 
         $genreDb->update([
-            'name' => $genre->name
+            'name' => $genre->name,
         ]);
 
         if (count($genre->categoriesId) > 0) {
@@ -98,10 +99,10 @@ class GenreEloquentRepository implements GenreRepositoryInterface
 
         return $this->toGenre($genreDb);
     }
-    
+
     public function delete(string $genreId): bool
     {
-        if (!$genreDb = $this->model->find($genreId)) {
+        if (! $genreDb = $this->model->find($genreId)) {
             throw new NotFoundException("Genre {$genreId} not found");
         }
 

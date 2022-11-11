@@ -5,30 +5,24 @@ namespace App\Providers;
 use App\Events\{
     VideoEvent
 };
-use Illuminate\Support\ServiceProvider;
-use App\Repositories\Eloquent\{
-    CastMemberEloquentRepository,
-    CategoryEloquentRepository,
-    GenreEloquentRepository,
-    VideoEloquentRepository
-};
+use App\Repositories\Eloquent\CastMemberEloquentRepository;
+use App\Repositories\Eloquent\CategoryEloquentRepository;
+use App\Repositories\Eloquent\GenreEloquentRepository;
+use App\Repositories\Eloquent\VideoEloquentRepository;
 use App\Repositories\Transaction\DBTransaction;
+use App\Services\AMQP\AMQPInterface;
+use App\Services\AMQP\PhpAmqpService;
 use App\Services\{
     Storage\FileStorage
 };
-use App\Services\AMQP\AMQPInterface;
-use App\Services\AMQP\PhpAmqpService;
-use Core\Domain\Repository\{
-    CastMemberRepositoryInterface,
-    CategoryRepositoryInterface,
-    GenreRepositoryInterface,
-    VideoRepositoryInterface
-};
-use Core\UseCase\Interfaces\{
-    FileStorageInterface,
-    TransactionInterface
-};
+use Core\Domain\Repository\CastMemberRepositoryInterface;
+use Core\Domain\Repository\CategoryRepositoryInterface;
+use Core\Domain\Repository\GenreRepositoryInterface;
+use Core\Domain\Repository\VideoRepositoryInterface;
+use Core\UseCase\Interfaces\FileStorageInterface;
+use Core\UseCase\Interfaces\TransactionInterface;
 use Core\UseCase\Video\Interfaces\VideoEventManagerInterface;
+use Illuminate\Support\ServiceProvider;
 
 class CleanArchServiceProvider extends ServiceProvider
 {

@@ -2,22 +2,16 @@
 
 namespace Tests\Feature\App\Http\Controllers\Api;
 
-use App\Http\Requests\{
-    StoreCastMemberRequest,
-    UpdateCastMemberRequest,
-};
 use App\Http\Controllers\Api\CastMemberController;
+use App\Http\Requests\StoreCastMemberRequest;
+use App\Http\Requests\UpdateCastMemberRequest;
 use App\Models\CastMember;
 use App\Repositories\Eloquent\CastMemberEloquentRepository;
-use Core\UseCase\CastMember\{
-    CreateCastMemberUseCase,
-    DeleteCastMemberUseCase,
-    ListCastMembersUseCase,
-    ListCastMemberUseCase,
-    UpdateCastMemberUseCase
-};
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Core\UseCase\CastMember\CreateCastMemberUseCase;
+use Core\UseCase\CastMember\DeleteCastMemberUseCase;
+use Core\UseCase\CastMember\ListCastMembersUseCase;
+use Core\UseCase\CastMember\ListCastMemberUseCase;
+use Core\UseCase\CastMember\UpdateCastMemberUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -59,7 +53,7 @@ class CastMemberControllerTest extends TestCase
         $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([
             'name' => 'Teste',
-            'type' => 1
+            'type' => 1,
         ]));
 
         $response = $this->controller->store($request, $useCase);
@@ -76,7 +70,7 @@ class CastMemberControllerTest extends TestCase
             useCase: new ListCastMemberUseCase($this->repository),
             id: $castMember->id,
         );
-        
+
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->status());
     }
@@ -89,7 +83,7 @@ class CastMemberControllerTest extends TestCase
         $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([
             'name' => 'Updated',
-            'type' => 2
+            'type' => 2,
         ]));
 
         $response = $this->controller->update(
@@ -101,7 +95,7 @@ class CastMemberControllerTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->status());
         $this->assertDatabaseHas('cast_members', [
-            'name' => 'Updated'
+            'name' => 'Updated',
         ]);
     }
 

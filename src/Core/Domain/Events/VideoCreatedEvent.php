@@ -8,7 +8,8 @@ class VideoCreatedEvent implements EventInterface
 {
     public function __construct(
         protected Video $video
-    ) {}
+    ) {
+    }
 
     public function getEventName(): string
     {

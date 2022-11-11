@@ -4,20 +4,18 @@ namespace Core\UseCase\Genre;
 
 use Core\Domain\Entity\Genre;
 use Core\Domain\Exception\NotFoundException;
-use Core\Domain\Repository\{
-    CategoryRepositoryInterface,
-    GenreRepositoryInterface
-};
-use Core\UseCase\DTO\Genre\Create\{
-    GenreCreateInputDto,
-    GenreCreateOutputDto
-};
+use Core\Domain\Repository\CategoryRepositoryInterface;
+use Core\Domain\Repository\GenreRepositoryInterface;
+use Core\UseCase\DTO\Genre\Create\GenreCreateInputDto;
+use Core\UseCase\DTO\Genre\Create\GenreCreateOutputDto;
 use Core\UseCase\Interfaces\TransactionInterface;
 
 class CreateGenreUseCase
 {
     protected $repository;
+
     protected $transaction;
+
     protected $categoryRepository;
 
     public function __construct(

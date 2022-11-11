@@ -3,14 +3,12 @@
 namespace Tests\Unit\UseCase\CastMember;
 
 use Core\Domain\Entity\CastMember as EntityCastMember;
-use Core\UseCase\DTO\CastMember\Update\{
-    CastMemberUpdateInputDto,
-    CastMemberUpdateOutputDto
-};
 use Core\Domain\Enum\CastMemberType;
 use Core\Domain\Repository\CastMemberRepositoryInterface;
 use Core\Domain\ValueObject\Uuid as ValueObjectUuid;
 use Core\UseCase\CastMember\UpdateCastMemberUseCase;
+use Core\UseCase\DTO\CastMember\Update\CastMemberUpdateInputDto;
+use Core\UseCase\DTO\CastMember\Update\CastMemberUpdateOutputDto;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid as RamseyUuid;
@@ -25,7 +23,7 @@ class UpdateCastMermberUseCaseUnitTest extends TestCase
         $mockEntity = Mockery::mock(EntityCastMember::class, [
             'name',
             CastMemberType::ACTOR,
-            new ValueObjectUuid($uuid)
+            new ValueObjectUuid($uuid),
         ]);
         $mockEntity->shouldReceive('id')->andReturn($uuid);
         $mockEntity->shouldReceive('createdAt')->andReturn(date('Y-m-d H:i:s'));
@@ -41,7 +39,7 @@ class UpdateCastMermberUseCaseUnitTest extends TestCase
                             ->andReturn($mockEntity);
 
         $mockInputDto = Mockery::mock(CastMemberUpdateInputDto::class, [
-            $uuid, 'new name'
+            $uuid, 'new name',
         ]);
 
         $useCase = new UpdateCastMemberUseCase($mockRepository);

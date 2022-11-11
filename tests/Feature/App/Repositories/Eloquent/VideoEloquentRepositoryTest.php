@@ -3,26 +3,20 @@
 namespace Tests\Feature\App\Repositories\Eloquent;
 
 use App\Enums\ImageTypes;
-use App\Models\{
-    Category,
-    CastMember,
-    Video as Model,
-    Genre,
-};
-use Core\Domain\Entity\Video as EntityVideo;
+use App\Models\CastMember;
+use App\Models\Category;
+use App\Models\Genre;
+use App\Models\Video as Model;
 use App\Repositories\Eloquent\VideoEloquentRepository;
+use Core\Domain\Entity\Video as EntityVideo;
 use Core\Domain\Enum\MediaStatus;
 use Core\Domain\Enum\Rating;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\VideoRepositoryInterface;
-use Core\Domain\ValueObject\{
-    Image as ValueObjectImage,
-    Media as ValueObjectMedia,
-};
+use Core\Domain\ValueObject\Image as ValueObjectImage;
+use Core\Domain\ValueObject\Media as ValueObjectMedia;
 use Core\Domain\ValueObject\Uuid;
 use DateTime;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class VideoEloquentRepositoryTest extends TestCase
@@ -37,7 +31,7 @@ class VideoEloquentRepositoryTest extends TestCase
             new Model()
         );
     }
-    
+
     public function testImplementsInterface()
     {
         $this->assertInstanceOf(

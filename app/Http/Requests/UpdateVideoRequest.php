@@ -29,7 +29,7 @@ class UpdateVideoRequest extends FormRequest
                 'max: 255',
             ],
             'description' => [
-                'required'
+                'required',
             ],
             'categories' => 'required|array|exists:categories,id,deleted_at,NULL',
             'genres' => [

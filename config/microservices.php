@@ -2,7 +2,7 @@
 
 return [
     'queue_name' => env('RABBITMQ_QUEUE'),
-    
+
     'rabbitmq' => [
         'hosts' => [
             [
@@ -19,5 +19,5 @@ return [
         'exchange' => 'dlx',
         'queue_name' => 'video',
         'exchange_producer' => 'amq.direct',
-    ]
+    ],
 ];

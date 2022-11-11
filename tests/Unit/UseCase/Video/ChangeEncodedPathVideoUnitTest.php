@@ -63,7 +63,7 @@ class ChangeEncodedPathVideoUnitTest extends TestCase
         );
 
         $response = $useCase->exec(input: $input);
-        
+
         Mockery::close();
     }
 

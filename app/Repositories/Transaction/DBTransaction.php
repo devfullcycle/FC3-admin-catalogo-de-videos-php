@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Repositories\Transaction;
 
@@ -21,5 +21,4 @@ class DBTransaction implements TransactionInterface
     {
         DB::rollBack();
     }
-
 }

@@ -9,5 +9,6 @@ class CategoryUpdateInputDto
         public string $name,
         public string|null $description = null,
         public bool $isActive = true,
-    ) {}
+    ) {
+    }
 }

@@ -2,13 +2,10 @@
 
 namespace Tests\Unit\UseCase\Video;
 
-use Core\Domain\Enum\Rating;
 use Core\Domain\ValueObject\Uuid;
+use Core\UseCase\Video\Update\DTO\UpdateInputVideoDTO;
+use Core\UseCase\Video\Update\DTO\UpdateOutputVideoDTO;
 use Core\UseCase\Video\Update\UpdateVideoUseCase;
-use Core\UseCase\Video\Update\DTO\{
-    UpdateInputVideoDTO,
-    UpdateOutputVideoDTO
-};
 use Mockery;
 
 class UpdateVideoUseCaseUnitTest extends BaseVideoUseCaseUnitTest
@@ -23,7 +20,7 @@ class UpdateVideoUseCaseUnitTest extends BaseVideoUseCaseUnitTest
 
         $this->assertInstanceOf(UpdateOutputVideoDTO::class, $response);
     }
-    
+
     protected function nameActionRepository(): string
     {
         return 'update';

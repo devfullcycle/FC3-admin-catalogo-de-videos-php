@@ -4,15 +4,12 @@ namespace Tests\Unit\UseCase;
 
 use Core\Domain\Entity\CastMember as EntityCastMember;
 use Core\Domain\Enum\CastMemberType;
-use Core\UseCase\DTO\CastMember\Create\{
-    CastMemberCreateInputDto,
-    CastMemberCreateOutputDto,
-};
 use Core\Domain\Repository\CastMemberRepositoryInterface;
 use Core\UseCase\CastMember\CreateCastMemberUseCase;
+use Core\UseCase\DTO\CastMember\Create\CastMemberCreateInputDto;
+use Core\UseCase\DTO\CastMember\Create\CastMemberCreateOutputDto;
 use Mockery;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid;
 use stdClass;
 
 class CreateCastMemberUseCaseUnitTest extends TestCase
@@ -31,7 +28,7 @@ class CreateCastMemberUseCaseUnitTest extends TestCase
         $useCase = new CreateCastMemberUseCase($mockRepository);
 
         $mockDto = Mockery::mock(CastMemberCreateInputDto::class, [
-            'name', 1
+            'name', 1,
         ]);
 
         // action

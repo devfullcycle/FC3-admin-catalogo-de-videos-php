@@ -51,7 +51,7 @@ class BuilderVideo implements Builder
             $this->entity->addCastMember($castMemberId);
         }
     }
-    
+
     public function addMediaVideo(string $path, MediaStatus $mediaStatus, string $encodedPath = ''): Builder
     {
         $media = new Media(
@@ -63,7 +63,7 @@ class BuilderVideo implements Builder
 
         return $this;
     }
-    
+
     public function addTrailer(string $path): Builder
     {
         $media = new Media(
@@ -74,7 +74,7 @@ class BuilderVideo implements Builder
 
         return $this;
     }
-    
+
     public function addThumb(string $path): Builder
     {
         $this->entity->setThumbFile(new Image(
@@ -83,7 +83,7 @@ class BuilderVideo implements Builder
 
         return $this;
     }
-    
+
     public function addThumbHalf(string $path): Builder
     {
         $this->entity->setThumbHalf(new Image(
@@ -92,7 +92,7 @@ class BuilderVideo implements Builder
 
         return $this;
     }
-    
+
     public function addBanner(string $path): Builder
     {
         $this->entity->setBannerFile(new Image(
@@ -101,7 +101,7 @@ class BuilderVideo implements Builder
 
         return $this;
     }
-    
+
     public function getEntity(): Entity
     {
         return $this->entity;

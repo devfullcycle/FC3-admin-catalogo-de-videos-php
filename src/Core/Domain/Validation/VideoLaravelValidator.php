@@ -22,7 +22,7 @@ class VideoLaravelValidator implements ValidatorInterface
             foreach ($validator->errors()->messages() as $error) {
                 $entity->notification->addError([
                     'context' => 'video',
-                    'message' => $error[0]
+                    'message' => $error[0],
                 ]);
             }
         }

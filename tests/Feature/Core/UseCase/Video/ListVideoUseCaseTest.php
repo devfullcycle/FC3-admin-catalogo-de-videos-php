@@ -5,10 +5,8 @@ namespace Tests\Feature\Core\UseCase\Video;
 use App\Models\Video;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\VideoRepositoryInterface;
-use Core\UseCase\Video\List\{
-    DTO\ListInputVideoUseCase,
-    ListVideoUseCase
-};
+use Core\UseCase\Video\List\DTO\ListInputVideoUseCase;
+use Core\UseCase\Video\List\ListVideoUseCase;
 use Tests\TestCase;
 
 class ListVideoUseCaseTest extends TestCase

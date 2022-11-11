@@ -27,13 +27,13 @@ class UpdateGenre extends FormRequest
             'name' => [
                 'required',
                 'min:3',
-                'max:255'
+                'max:255',
             ],
             'categories_ids' => [
                 'required',
                 'array',
                 'exists:categories,id,deleted_at,NULL',
-            ]
+            ],
         ];
     }
 }

@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
 
         VideoCreatedEvent::class => [
             SendVideoToMicroEncoder::class,
-        ]
+        ],
     ];
 
     /**

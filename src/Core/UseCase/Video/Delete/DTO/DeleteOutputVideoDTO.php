@@ -6,5 +6,6 @@ class DeleteOutputVideoDTO
 {
     public function __construct(
         public bool $deleted
-    ) {}
+    ) {
+    }
 }

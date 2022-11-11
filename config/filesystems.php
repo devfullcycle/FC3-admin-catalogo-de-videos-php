@@ -62,7 +62,7 @@ return [
             'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', ''), // optional: /default/path/to/apply/in/bucket
             'apiEndpoint' => env('GOOGLE_CLOUD_STORAGE_API_URI', null), // see: Public URLs below
             'visibility' => 'public', // optional: public|private
-            'metadata' => ['cacheControl'=> 'public,max-age=86400'], // optional: default metadata
+            'metadata' => ['cacheControl' => 'public,max-age=86400'], // optional: default metadata
         ],
 
     ],

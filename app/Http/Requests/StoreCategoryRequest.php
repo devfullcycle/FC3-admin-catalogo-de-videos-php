@@ -37,7 +37,7 @@ class StoreCategoryRequest extends FormRequest
             'is_active' => [
                 'nullable',
                 'boolean',
-            ]
+            ],
         ];
     }
 }

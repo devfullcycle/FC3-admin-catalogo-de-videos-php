@@ -2,19 +2,16 @@
 
 namespace Tests\Unit\Domain\Entity;
 
-use Core\Domain\ValueObject\{
-    Image,
-    Media
-};
 use Core\Domain\Entity\Video;
 use Core\Domain\Enum\MediaStatus;
 use Core\Domain\Enum\Rating;
 use Core\Domain\Notification\NotificationException;
+use Core\Domain\ValueObject\Image;
+use Core\Domain\ValueObject\Media;
 use Core\Domain\ValueObject\Uuid;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid as RamseyUuid;
-use tidy;
 
 class VideoUnitTest extends TestCase
 {
@@ -278,7 +275,6 @@ class VideoUnitTest extends TestCase
         $this->assertInstanceOf(Media::class, $entity->trailerFile());
         $this->assertEquals('path/trailer.mp4', $entity->trailerFile()->filePath);
     }
-
 
     public function testValueObjectMediaVideo()
     {

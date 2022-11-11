@@ -2,11 +2,10 @@
 
 namespace Tests\Unit\App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Genre;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use PHPUnit\Framework\TestCase;
 
 class GenreUnitTest extends ModelTestCase
 {
@@ -22,7 +21,7 @@ class GenreUnitTest extends ModelTestCase
             SoftDeletes::class,
         ];
     }
-    
+
     protected function fillables(): array
     {
         return [
@@ -38,7 +37,7 @@ class GenreUnitTest extends ModelTestCase
         return [
             'id' => 'string',
             'is_active' => 'boolean',
-            'deleted_at' => 'datetime'
+            'deleted_at' => 'datetime',
         ];
     }
 }

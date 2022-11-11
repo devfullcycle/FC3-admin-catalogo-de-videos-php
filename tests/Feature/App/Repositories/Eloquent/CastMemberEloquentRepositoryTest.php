@@ -3,14 +3,12 @@
 namespace Tests\Feature\App\Repositories\Eloquent;
 
 use App\Models\CastMember as Model;
-use Core\Domain\Entity\CastMember as Entity;
 use App\Repositories\Eloquent\CastMemberEloquentRepository;
+use Core\Domain\Entity\CastMember as Entity;
 use Core\Domain\Enum\CastMemberType;
 use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\CastMemberRepositoryInterface;
 use Core\Domain\ValueObject\Uuid as ValueObjectUuid;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CastMemberEloquentRepositoryTest extends TestCase
@@ -87,7 +85,6 @@ class CastMemberEloquentRepositoryTest extends TestCase
     }
 
     public function testPaginationWithTotalPage()
-
     {
         Model::factory()->count(80)->create();
 
@@ -141,7 +138,7 @@ class CastMemberEloquentRepositoryTest extends TestCase
         $this->repository->delete($castMember->id);
 
         $this->assertSoftDeleted('cast_members', [
-            'id' => $castMember->id
+            'id' => $castMember->id,
         ]);
     }
 }

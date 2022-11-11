@@ -28,7 +28,7 @@ class UpdateCategoryRequest extends FormRequest
                 'required',
                 'min:3',
                 'max:255',
-            ]
+            ],
         ];
     }
 }

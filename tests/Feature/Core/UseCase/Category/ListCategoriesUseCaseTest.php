@@ -6,8 +6,6 @@ use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryEloquentRepository;
 use Core\UseCase\Category\ListCategoriesUseCase;
 use Core\UseCase\DTO\Category\ListCategories\ListCategoriesInputDto;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ListCategoriesUseCaseTest extends TestCase
@@ -33,6 +31,7 @@ class ListCategoriesUseCaseTest extends TestCase
     {
         $repository = new CategoryEloquentRepository(new Model());
         $useCase = new ListCategoriesUseCase($repository);
+
         return $useCase->execute(new ListCategoriesInputDto());
     }
 }

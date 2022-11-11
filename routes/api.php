@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\{
-    CastMemberController,
-    CategoryController,
-    GenreController,
-    VideoController,
-};
+use App\Http\Controllers\Api\CastMemberController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\GenreController;
+use App\Http\Controllers\Api\VideoController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:api', 'can:admin-catalog'])->group(function () {

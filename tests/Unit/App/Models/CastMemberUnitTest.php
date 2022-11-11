@@ -2,11 +2,10 @@
 
 namespace Tests\Unit\App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\CastMember;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use PHPUnit\Framework\TestCase;
 
 class CastMemberUnitTest extends ModelTestCase
 {
@@ -22,7 +21,7 @@ class CastMemberUnitTest extends ModelTestCase
             SoftDeletes::class,
         ];
     }
-    
+
     protected function fillables(): array
     {
         return [
@@ -37,7 +36,7 @@ class CastMemberUnitTest extends ModelTestCase
     {
         return [
             'id' => 'string',
-            'deleted_at' => 'datetime'
+            'deleted_at' => 'datetime',
         ];
     }
 }

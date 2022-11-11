@@ -2,15 +2,13 @@
 
 namespace Tests\Feature\App\Repositories\Eloquent;
 
-use Core\Domain\Exception\NotFoundException;
-use App\Models\Category as Model;
 use App\Models\Category;
+use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryEloquentRepository;
 use Core\Domain\Entity\Category as EntityCategory;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\Repository\CategoryRepositoryInterface;
 use Core\Domain\Repository\PaginationInterface;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Throwable;
 
@@ -36,8 +34,8 @@ class CategoryEloquentRepositoryTest extends TestCase
         $this->assertInstanceOf(CategoryRepositoryInterface::class, $this->repository);
         $this->assertInstanceOf(EntityCategory::class, $response);
         $this->assertDatabaseHas('categories', [
-            'name' => $entity->name
-        ]);      
+            'name' => $entity->name,
+        ]);
     }
 
     public function testFindById()

@@ -3,10 +3,8 @@
 namespace Tests\Feature\Core\UseCase\Video;
 
 use App\Models\Video;
-use Core\UseCase\Video\Update\{
-    DTO\UpdateInputVideoDTO,
-    UpdateVideoUseCase
-};
+use Core\UseCase\Video\Update\DTO\UpdateInputVideoDTO;
+use Core\UseCase\Video\Update\UpdateVideoUseCase;
 
 class UpdateVideoUseCaseTest extends BaseVideoUseCase
 {
@@ -14,7 +12,7 @@ class UpdateVideoUseCaseTest extends BaseVideoUseCase
     {
         return UpdateVideoUseCase::class;
     }
-    
+
     public function inputDTO(
         array $categories = [],
         array $genres = [],
@@ -24,8 +22,7 @@ class UpdateVideoUseCaseTest extends BaseVideoUseCase
         ?array $bannerFile = null,
         ?array $thumbFile = null,
         ?array $thumbHalf = null,
-    ): object
-    {
+    ): object {
         $video = Video::factory()->create();
 
         return new UpdateInputVideoDTO(

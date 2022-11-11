@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use Carbon\Carbon;
 use Core\Domain\Enum\Rating;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Video>

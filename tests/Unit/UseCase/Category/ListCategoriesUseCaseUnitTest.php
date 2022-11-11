@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\UseCase\Category;
 
-use Core\Domain\Entity\Category as CategoryEntity;
 use Core\Domain\Repository\CategoryRepositoryInterface;
 use Core\Domain\Repository\PaginationInterface;
 use Core\UseCase\Category\ListCategoriesUseCase;

@@ -4,7 +4,7 @@ namespace Core\Domain\Enum;
 
 enum Rating: string
 {
-    case ER  = 'ER';
+    case ER = 'ER';
     case L = 'L';
     case RATE10 = '10';
     case RATE12 = '12';

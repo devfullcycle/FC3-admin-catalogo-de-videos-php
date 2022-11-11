@@ -2,22 +2,18 @@
 
 namespace Core\UseCase\Video;
 
+use Core\Domain\Builder\Video\Builder;
 use Core\Domain\Enum\{
     MediaStatus
 };
 use Core\Domain\Events\VideoCreatedEvent;
 use Core\Domain\Exception\NotFoundException;
-use Core\Domain\Repository\{
-    CastMemberRepositoryInterface,
-    CategoryRepositoryInterface,
-    GenreRepositoryInterface,
-    VideoRepositoryInterface
-};
-use Core\UseCase\Interfaces\{
-    FileStorageInterface,
-    TransactionInterface
-};
-use Core\Domain\Builder\Video\Builder;
+use Core\Domain\Repository\CastMemberRepositoryInterface;
+use Core\Domain\Repository\CategoryRepositoryInterface;
+use Core\Domain\Repository\GenreRepositoryInterface;
+use Core\Domain\Repository\VideoRepositoryInterface;
+use Core\UseCase\Interfaces\FileStorageInterface;
+use Core\UseCase\Interfaces\TransactionInterface;
 use Core\UseCase\Video\Interfaces\VideoEventManagerInterface;
 
 abstract class BaseVideoUseCase
@@ -109,7 +105,7 @@ abstract class BaseVideoUseCase
         if (count($arrayDiff)) {
             $msg = sprintf(
                 '%s %s not found',
-                count($arrayDiff) > 1 ? $pluralLabel ?? $singularLabel . 's'  : $singularLabel,
+                count($arrayDiff) > 1 ? $pluralLabel ?? $singularLabel.'s' : $singularLabel,
                 implode(', ', $arrayDiff)
             );
 

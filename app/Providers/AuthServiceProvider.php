@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('admin-catalog', function () {
             $payload = json_decode(Auth::token());
-            
+
             $realmAccess = $payload->realm_access ?? null;
 
             $roles = $realmAccess->roles ?? [];

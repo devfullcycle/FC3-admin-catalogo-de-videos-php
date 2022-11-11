@@ -22,7 +22,7 @@ class VideoRakitValidator implements ValidatorInterface
             foreach ($validation->errors()->all() as $error) {
                 $entity->notification->addError([
                     'context' => 'video',
-                    'message' => $error
+                    'message' => $error,
                 ]);
             }
         }

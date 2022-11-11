@@ -6,9 +6,6 @@ use App\Models\Genre as Model;
 use App\Repositories\Eloquent\GenreEloquentRepository;
 use Core\UseCase\DTO\Genre\GenreInputDto;
 use Core\UseCase\Genre\DeleteGenreUseCase;
-use Core\UseCase\Genre\ListGenreUseCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DeleteGenreUseCaseTest extends TestCase
@@ -28,7 +25,7 @@ class DeleteGenreUseCaseTest extends TestCase
         $this->assertTrue($responseUseCase->success);
 
         $this->assertSoftDeleted('genres', [
-            'id' => $genre->id
+            'id' => $genre->id,
         ]);
     }
 }

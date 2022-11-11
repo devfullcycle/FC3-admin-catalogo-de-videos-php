@@ -10,7 +10,8 @@ class ApiAdapter
     public function __construct(
         // private ?PaginationInterface $response = null
         private PaginationInterface $response
-    ) {}
+    ) {
+    }
 
     public function toJson()
     {
@@ -28,13 +29,13 @@ class ApiAdapter
                                         'per_page' => $this->response->perPage(),
                                         'to' => $this->response->to(),
                                         'from' => $this->response->from(),
-                                    ]
+                                    ],
                                 ]);
     }
 
     public function toXml()
     {
-        // 
+        //
     }
 
     public static function json(object $data, int $statusCode = 200)

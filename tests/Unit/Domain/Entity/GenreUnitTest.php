@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Domain\Entity;
 
-use Ramsey\Uuid\Uuid as RamseyUuid;
 use Core\Domain\Entity\Genre;
 use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\ValueObject\Uuid;
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid as RamseyUuid;
 
 class GenreUnitTest extends TestCase
 {

@@ -4,10 +4,8 @@ namespace Tests\Feature\Core\UseCase\Video;
 
 use App\Models\Video;
 use Core\Domain\Repository\VideoRepositoryInterface;
-use Core\UseCase\Video\Paginate\{
-    DTO\PaginateInputVideoDTO,
-    ListVideosUseCase
-};
+use Core\UseCase\Video\Paginate\DTO\PaginateInputVideoDTO;
+use Core\UseCase\Video\Paginate\ListVideosUseCase;
 use Tests\TestCase;
 
 class ListVideosUseCaseTest extends TestCase

@@ -6,8 +6,6 @@ use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryEloquentRepository;
 use Core\UseCase\Category\CreateCategoryUseCase;
 use Core\UseCase\DTO\Category\CreateCategory\CategoryCreateInputDto;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CreateCategoryUseCaseTest extends TestCase
@@ -26,7 +24,7 @@ class CreateCategoryUseCaseTest extends TestCase
         $this->assertNotEmpty($responseUseCase->id);
 
         $this->assertDatabaseHas('categories', [
-            'id' => $responseUseCase->id
+            'id' => $responseUseCase->id,
         ]);
     }
 }

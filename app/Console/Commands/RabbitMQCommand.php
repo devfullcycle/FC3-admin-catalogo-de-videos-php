@@ -39,11 +39,11 @@ class RabbitMQCommand extends Command
     {
         $closure = function ($message) {
             $body = json_decode($message->body);
-            
+
             if (isset($body->Error) && $body->Error === '') {
-                $encodedPath = $body->video->encoded_video_folder  . '/stream.mpd';
+                $encodedPath = $body->video->encoded_video_folder.'/stream.mpd';
                 $videoId = $body->video->resource_id;
-                
+
                 $this->useCase->exec(
                     new ChangeEncodedVideoDTO(
                         id: $videoId,

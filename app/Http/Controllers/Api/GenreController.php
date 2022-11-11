@@ -12,13 +12,11 @@ use Core\UseCase\DTO\Genre\List\{
     ListGenresInputDto
 };
 use Core\UseCase\DTO\Genre\Update\GenreUpdateInputDto;
-use Core\UseCase\Genre\{
-    CreateGenreUseCase,
-    DeleteGenreUseCase,
-    ListGenresUseCase,
-    ListGenreUseCase,
-    UpdateGenreUseCase
-};
+use Core\UseCase\Genre\CreateGenreUseCase;
+use Core\UseCase\Genre\DeleteGenreUseCase;
+use Core\UseCase\Genre\ListGenresUseCase;
+use Core\UseCase\Genre\ListGenreUseCase;
+use Core\UseCase\Genre\UpdateGenreUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -50,7 +48,7 @@ class GenreController extends Controller
                                             'per_page' => $response->per_page,
                                             'to' => $response->to,
                                             'from' => $response->from,
-                                        ]
+                                        ],
                                     ]);
     }
 

@@ -6,8 +6,6 @@ use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryEloquentRepository;
 use Core\UseCase\Category\DeleteCategoryUseCase;
 use Core\UseCase\DTO\Category\CategoryInputDto;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DeleteCategoryUseCaseTest extends TestCase

@@ -3,8 +3,6 @@
 namespace Tests\Feature\Api;
 
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 use Tests\Traits\WithoutMiddlewareTrait;
@@ -38,8 +36,8 @@ class CategoryApiTest extends TestCase
                 'first_page',
                 'per_page',
                 'to',
-                'from'
-            ]
+                'from',
+            ],
         ]);
         $response->assertJsonCount(15, 'data');
     }
@@ -49,7 +47,7 @@ class CategoryApiTest extends TestCase
         Category::factory()->count(25)->create();
 
         $response = $this->getJson("$this->endpoint?page=2");
-        
+
         $response->assertStatus(200);
         $this->assertEquals(2, $response['meta']['current_page']);
         $this->assertEquals(25, $response['meta']['total']);
@@ -68,7 +66,7 @@ class CategoryApiTest extends TestCase
         $category = Category::factory()->create();
 
         $response = $this->getJson("$this->endpoint/{$category->id}");
-        
+
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure([
             'data' => [
@@ -76,8 +74,8 @@ class CategoryApiTest extends TestCase
                 'name',
                 'description',
                 'is_active',
-                'created_at'
-            ]
+                'created_at',
+            ],
         ]);
         $this->assertEquals($category->id, $response['data']['id']);
     }
@@ -92,15 +90,15 @@ class CategoryApiTest extends TestCase
         $response->assertJsonStructure([
             'message',
             'errors' => [
-                'name'
-            ]
+                'name',
+            ],
         ]);
     }
 
     public function test_store()
     {
         $data = [
-            'name' => 'New Category'
+            'name' => 'New Category',
         ];
 
         $response = $this->postJson($this->endpoint, $data);
@@ -112,8 +110,8 @@ class CategoryApiTest extends TestCase
                 'name',
                 'description',
                 'is_active',
-                'created_at'
-            ]
+                'created_at',
+            ],
         ]);
 
         $response = $this->postJson($this->endpoint, [
@@ -152,8 +150,8 @@ class CategoryApiTest extends TestCase
         $response->assertJsonStructure([
             'message',
             'errors' => [
-                'name'
-            ]
+                'name',
+            ],
         ]);
     }
 
@@ -175,7 +173,7 @@ class CategoryApiTest extends TestCase
                 'description',
                 'is_active',
                 'created_at',
-            ]
+            ],
         ]);
         $this->assertDatabaseHas('categories', [
             'name' => 'Name Updated',

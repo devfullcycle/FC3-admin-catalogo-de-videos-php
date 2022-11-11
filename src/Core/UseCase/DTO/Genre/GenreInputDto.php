@@ -6,5 +6,6 @@ class GenreInputDto
 {
     public function __construct(
         public string $id = '',
-    ) {}
+    ) {
+    }
 }

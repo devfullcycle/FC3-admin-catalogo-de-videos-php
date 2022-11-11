@@ -2,13 +2,11 @@
 
 namespace Tests\Unit\UseCase\Genre;
 
-use Core\UseCase\DTO\Genre\{
-    GenreInputDto,
-    GenreOutputDto,
-};
 use Core\Domain\Entity\Genre as EntityGenre;
 use Core\Domain\Repository\GenreRepositoryInterface;
 use Core\Domain\ValueObject\Uuid as ValueObjectUuid;
+use Core\UseCase\DTO\Genre\GenreInputDto;
+use Core\UseCase\DTO\Genre\GenreOutputDto;
 use Core\UseCase\Genre\ListGenreUseCase;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +19,7 @@ class ListGenreUseCaseUnitTest extends TestCase
         $uuid = (string) Uuid::uuid4();
 
         $mockEntity = Mockery::mock(EntityGenre::class, [
-            'teste', new ValueObjectUuid($uuid), true, []
+            'teste', new ValueObjectUuid($uuid), true, [],
         ]);
         $mockEntity->shouldReceive('createdAt')->andReturn(date('Y-m-d H:i:s'));
 
@@ -29,9 +27,9 @@ class ListGenreUseCaseUnitTest extends TestCase
         $mockRepository->shouldReceive('findById')->once()->with($uuid)->andReturn($mockEntity);
 
         $mockInputDto = Mockery::mock(GenreInputDto::class, [
-            $uuid
+            $uuid,
         ]);
-        
+
         $useCase = new ListGenreUseCase($mockRepository);
         $response = $useCase->execute($mockInputDto);
 

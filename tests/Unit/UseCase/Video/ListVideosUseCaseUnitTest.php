@@ -15,7 +15,7 @@ use Tests\Unit\UseCase\UseCaseTrait;
 class ListVideosUseCaseUnitTest extends TestCase
 {
     use UseCaseTrait;
-    
+
     public function test_list_paginate()
     {
         $useCase = new ListVideosUseCase(

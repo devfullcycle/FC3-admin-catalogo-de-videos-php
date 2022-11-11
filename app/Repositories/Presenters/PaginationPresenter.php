@@ -79,5 +79,4 @@ class PaginationPresenter implements PaginationInterface
 
         return $response;
     }
-
 }

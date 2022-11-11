@@ -2,23 +2,19 @@
 
 namespace Core\UseCase\Genre;
 
-use Core\Domain\Entity\Genre;
 use Core\Domain\Exception\NotFoundException;
-use Core\Domain\Repository\{
-    CategoryRepositoryInterface,
-    GenreRepositoryInterface
-};
-use Core\Domain\ValueObject\Uuid;
-use Core\UseCase\DTO\Genre\Update\{
-    GenreUpdateInputDto,
-    GenreUpdateOutputDto
-};
+use Core\Domain\Repository\CategoryRepositoryInterface;
+use Core\Domain\Repository\GenreRepositoryInterface;
+use Core\UseCase\DTO\Genre\Update\GenreUpdateInputDto;
+use Core\UseCase\DTO\Genre\Update\GenreUpdateOutputDto;
 use Core\UseCase\Interfaces\TransactionInterface;
 
 class UpdateGenreUseCase
 {
     protected $repository;
+
     protected $transaction;
+
     protected $categoryRepository;
 
     public function __construct(

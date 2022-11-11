@@ -10,7 +10,7 @@ trait WithoutMiddlewareTrait
 
         $this->withoutMiddleware([
             \App\Http\Middleware\Authenticate::class,
-            \Illuminate\Auth\Middleware\Authorize::class
+            \Illuminate\Auth\Middleware\Authorize::class,
         ]);
     }
 }

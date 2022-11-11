@@ -2,17 +2,13 @@
 
 namespace Tests\Unit\UseCase\Genre;
 
-use Core\UseCase\DTO\Genre\Create\{
-    GenreCreateInputDto,
-    GenreCreateOutputDto,
-};
 use Core\Domain\Entity\Genre as EntityGenre;
 use Core\Domain\Exception\NotFoundException;
-use Core\Domain\Repository\{
-    CategoryRepositoryInterface,
-    GenreRepositoryInterface
-};
+use Core\Domain\Repository\CategoryRepositoryInterface;
+use Core\Domain\Repository\GenreRepositoryInterface;
 use Core\Domain\ValueObject\Uuid as ValueObjectUuid;
+use Core\UseCase\DTO\Genre\Create\GenreCreateInputDto;
+use Core\UseCase\DTO\Genre\Create\GenreCreateOutputDto;
 use Core\UseCase\Genre\CreateGenreUseCase;
 use Core\UseCase\Interfaces\TransactionInterface;
 use Mockery;
@@ -45,7 +41,7 @@ class CreateGenreUseCaseUnitTest extends TestCase
     private function mockEntity(string $uuid)
     {
         $mockEntity = Mockery::mock(EntityGenre::class, [
-            'teste', new ValueObjectUuid($uuid), true, []
+            'teste', new ValueObjectUuid($uuid), true, [],
         ]);
         $mockEntity->shouldReceive('createdAt')->andReturn(date('Y-m-d H:i:s'));
 
@@ -71,7 +67,7 @@ class CreateGenreUseCaseUnitTest extends TestCase
         return $mockTransaction;
     }
 
-    private function mockCategoryRepository(string  $uuid)
+    private function mockCategoryRepository(string $uuid)
     {
         $mockCategoryRepository = Mockery::mock(stdClass::class, CategoryRepositoryInterface::class);
         $mockCategoryRepository->shouldReceive('getIdsListIds')->once()->andReturn([$uuid]);
@@ -82,7 +78,7 @@ class CreateGenreUseCaseUnitTest extends TestCase
     private function mockCreateInputDto(array $categoriesIds)
     {
         return Mockery::mock(GenreCreateInputDto::class, [
-            'name', $categoriesIds, true
+            'name', $categoriesIds, true,
         ]);
     }
 

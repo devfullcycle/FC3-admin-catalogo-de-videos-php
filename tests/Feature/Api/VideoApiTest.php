@@ -2,15 +2,10 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\{
-    CastMember,
-    Category,
-    Genre,
-    Video
-};
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\Response;
+use App\Models\CastMember;
+use App\Models\Category;
+use App\Models\Genre;
+use App\Models\Video;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -19,8 +14,9 @@ use Tests\Traits\WithoutMiddlewareTrait;
 class VideoApiTest extends TestCase
 {
     use WithoutMiddlewareTrait;
-    
+
     protected $endpoint = '/api/videos';
+
     protected $serializedFields = [
         'id',
         'title',
@@ -31,7 +27,7 @@ class VideoApiTest extends TestCase
         'duration',
         'created_at',
     ];
-    
+
     /**
      * @test
      */
@@ -56,7 +52,7 @@ class VideoApiTest extends TestCase
 
         if ($filter) {
             Video::factory()->count($total)->create([
-                'title' => $filter
+                'title' => $filter,
             ]);
         }
 
@@ -64,19 +60,19 @@ class VideoApiTest extends TestCase
             'page' => $page,
             'per_page' => $perPage,
             'order' => 'DESC',
-            'filter' => $filter
+            'filter' => $filter,
         ]);
 
         $response = $this->getJson("$this->endpoint?$params");
-        
+
         $response->assertOk();
         $response->assertJsonCount($totalCurrentPage, 'data');
         $response->assertJsonPath('meta.current_page', $page);
         $response->assertJsonPath('meta.per_page', $perPage);
         $response->assertJsonStructure([
             'data' => [
-                '*' => $this->serializedFields
-            ], 
+                '*' => $this->serializedFields,
+            ],
             'meta' => [
                 'total',
                 'current_page',
@@ -85,7 +81,7 @@ class VideoApiTest extends TestCase
                 'per_page',
                 'to',
                 'from',
-            ]
+            ],
         ]);
     }
 
@@ -97,13 +93,13 @@ class VideoApiTest extends TestCase
                 'totalCurrentPage' => 0,
                 'page' => 1,
                 'perPage' => 15,
-            ], 
+            ],
             'test with total two pages' => [
                 'total' => 20,
                 'totalCurrentPage' => 15,
                 'page' => 1,
                 'perPage' => 15,
-            ], 
+            ],
             'test page two' => [
                 'total' => 20,
                 'totalCurrentPage' => 5,
@@ -136,7 +132,7 @@ class VideoApiTest extends TestCase
         $response = $this->getJson("$this->endpoint/{$video->id}");
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => $this->serializedFields
+            'data' => $this->serializedFields,
         ]);
     }
 
@@ -180,7 +176,7 @@ class VideoApiTest extends TestCase
         $response = $this->postJson($this->endpoint, $data);
         $response->assertCreated();
         $response->assertJsonStructure([
-            'data' => $this->serializedFields
+            'data' => $this->serializedFields,
         ]);
 
         // $this->assertDatabaseCount('videos', 1);
@@ -230,7 +226,7 @@ class VideoApiTest extends TestCase
         $response = $this->putJson("$this->endpoint/{$video->id}", $data);
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => $this->serializedFields
+            'data' => $this->serializedFields,
         ]);
 
         $this->assertDatabaseCount('videos', 1);
@@ -286,7 +282,7 @@ class VideoApiTest extends TestCase
         $response->assertNoContent();
 
         $this->assertSoftDeleted('videos', [
-            'id' => $video->id
+            'id' => $video->id,
         ]);
     }
 

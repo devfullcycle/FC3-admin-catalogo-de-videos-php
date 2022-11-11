@@ -31,13 +31,13 @@ class StoreVideoRequest extends FormRequest
                 'max: 255',
             ],
             'description' => [
-                'required'
+                'required',
             ],
             'year_launched' => 'required|date_format:Y',
             'opened' => 'required|boolean',
             'rating' => [
                 'required',
-                new Enum(Rating::class)
+                new Enum(Rating::class),
             ],
             'duration' => 'required|integer',
             'categories' => 'required|array|exists:categories,id,deleted_at,NULL',

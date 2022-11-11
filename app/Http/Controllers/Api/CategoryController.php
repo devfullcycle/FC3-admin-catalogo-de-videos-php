@@ -3,18 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\{
-    StoreCategoryRequest,
-    UpdateCategoryRequest
-};
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
-use Core\UseCase\Category\{
-    CreateCategoryUseCase,
-    DeleteCategoryUseCase,
-    ListCategoriesUseCase,
-    ListCategoryUseCase,
-    UpdateCategoryUseCase
-};
+use Core\UseCase\Category\CreateCategoryUseCase;
+use Core\UseCase\Category\DeleteCategoryUseCase;
+use Core\UseCase\Category\ListCategoriesUseCase;
+use Core\UseCase\Category\ListCategoryUseCase;
+use Core\UseCase\Category\UpdateCategoryUseCase;
 use Core\UseCase\DTO\Category\CategoryInputDto;
 use Core\UseCase\DTO\Category\CreateCategory\CategoryCreateInputDto;
 use Core\UseCase\DTO\Category\ListCategories\ListCategoriesInputDto;
@@ -45,7 +41,7 @@ class CategoryController extends Controller
                                             'per_page' => $response->per_page,
                                             'to' => $response->to,
                                             'from' => $response->from,
-                                        ]
+                                        ],
                                     ]);
     }
 

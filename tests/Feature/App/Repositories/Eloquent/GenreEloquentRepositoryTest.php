@@ -38,7 +38,7 @@ class GenreEloquentRepositoryTest extends TestCase
         $this->assertEquals($entity->id, $response->id);
 
         $this->assertDatabaseHas('genres', [
-            'id' => $entity->id()
+            'id' => $entity->id(),
         ]);
     }
 
@@ -51,7 +51,7 @@ class GenreEloquentRepositoryTest extends TestCase
 
         $this->assertDatabaseHas('genres', [
             'id' => $entity->id(),
-            'is_active' => false
+            'is_active' => false,
         ]);
     }
 
@@ -111,7 +111,7 @@ class GenreEloquentRepositoryTest extends TestCase
     public function testFindAllWithFilter()
     {
         Model::factory()->count(10)->create([
-            'name' => 'Teste'
+            'name' => 'Teste',
         ]);
         Model::factory()->count(10)->create();
 
@@ -162,7 +162,7 @@ class GenreEloquentRepositoryTest extends TestCase
         $this->assertEquals('Name Updated', $response->name);
 
         $this->assertDatabaseHas('genres', [
-            'name' => 'Name Updated'
+            'name' => 'Name Updated',
         ]);
     }
 
