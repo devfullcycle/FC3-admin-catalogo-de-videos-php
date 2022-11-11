@@ -13,26 +13,10 @@ class PhpAmqpService implements AMQPInterface
 
     protected $channel = null;
 
-    public function __construct()
-    {
-        if ($this->connection || app()->runningInConsole()) {
-            return;
-        }
-
-        $configs = config('microservices.rabbitmq.hosts')[0];
-        $this->connection = new AMQPStreamConnection(
-            host: $configs['host'],
-            port: $configs['port'],
-            user: $configs['user'],
-            password: $configs['password'],
-            vhost: $configs['vhost']
-        );
-
-        $this->channel = $this->connection->channel();
-    }
-
     public function producer(string $queue, array $payload, string $exchange): void
     {
+        $this->connect();
+
         $this->channel->queue_declare($queue, false, true, false, false);
         $this->channel->exchange_declare($exchange, AMQPExchangeType::DIRECT, false, true, false);
         $this->channel->queue_bind($queue, $exchange);
@@ -46,6 +30,8 @@ class PhpAmqpService implements AMQPInterface
 
     public function producerFanout(array $payload, string $exchange): void
     {
+        $this->connect();
+
         $this->channel->exchange_declare(
             exchange: $exchange,
             type: AMQPExchangeType::FANOUT,
@@ -66,6 +52,8 @@ class PhpAmqpService implements AMQPInterface
 
     public function consumer(string $queue, string $exchange, Closure $callback): void
     {
+        $this->connect();
+
         $this->channel->queue_declare(
             queue: $queue,
             durable: true,
@@ -89,6 +77,24 @@ class PhpAmqpService implements AMQPInterface
 
         $this->closeChannel();
         $this->closeConnection();
+    }
+
+    private function connect(): void
+    {
+        if ($this->connection) {
+            return;
+        }
+
+        $configs = config('microservices.rabbitmq.hosts')[0];
+        $this->connection = new AMQPStreamConnection(
+            host: $configs['host'],
+            port: $configs['port'],
+            user: $configs['user'],
+            password: $configs['password'],
+            vhost: $configs['vhost']
+        );
+
+        $this->channel = $this->connection->channel();
     }
 
     private function closeChannel(): void
