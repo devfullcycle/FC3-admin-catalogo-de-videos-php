@@ -168,7 +168,7 @@ class VideoApiTest extends TestCase
             'categories' => $categoriesIds,
             'genres' => $genresIds,
             'cast_members' => $castMembersIds,
-            'video_file' => $mediaVideoFile,
+            // 'video_file' => $mediaVideoFile,
             'trailer_file' => $mediaVideoFile,
             'banner_file' => $imageVideoFile,
             'thumb_file' => $imageVideoFile,
@@ -189,7 +189,7 @@ class VideoApiTest extends TestCase
         $this->assertEquals($genresIds, $response->json('data.genres'));
         $this->assertEquals($castMembersIds, $response->json('data.cast_members'));
 
-        Storage::assertExists($response->json('data.video'));
+        // Storage::assertExists($response->json('data.video'));
         Storage::assertExists($response->json('data.trailer'));
         Storage::assertExists($response->json('data.banner'));
         Storage::assertExists($response->json('data.thumb'));
@@ -218,7 +218,7 @@ class VideoApiTest extends TestCase
             'categories' => $categoriesIds,
             'genres' => $genresIds,
             'cast_members' => $castMembersIds,
-            'video_file' => $mediaVideoFile,
+            // 'video_file' => $mediaVideoFile,
             'trailer_file' => $mediaVideoFile,
             'banner_file' => $imageVideoFile,
             'thumb_file' => $imageVideoFile,
@@ -241,7 +241,7 @@ class VideoApiTest extends TestCase
         $this->assertEquals($genresIds, $response->json('data.genres'));
         $this->assertEquals($castMembersIds, $response->json('data.cast_members'));
 
-        Storage::assertExists($response->json('data.video'));
+        // Storage::assertExists($response->json('data.video'));
         Storage::assertExists($response->json('data.trailer'));
         Storage::assertExists($response->json('data.banner'));
         Storage::assertExists($response->json('data.thumb'));
