@@ -7,9 +7,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Tests\TestCase;
+use Tests\Traits\WithoutMiddlewareTrait;
 
 class CastMemberApiTest extends TestCase
 {
+    use WithoutMiddlewareTrait;
+    
     private $endpoint = '/api/cast_members';
 
     public function test_get_all_empty()

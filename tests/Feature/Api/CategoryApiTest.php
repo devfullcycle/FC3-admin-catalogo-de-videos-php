@@ -7,9 +7,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Tests\TestCase;
+use Tests\Traits\WithoutMiddlewareTrait;
 
 class CategoryApiTest extends TestCase
 {
+    use WithoutMiddlewareTrait;
+
     protected $endpoint = '/api/categories';
 
     public function test_list_empty_categories()
