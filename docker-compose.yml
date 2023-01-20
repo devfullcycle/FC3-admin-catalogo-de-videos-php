@@ -28,6 +28,7 @@ services:
     ports:
       - '9600:9600'
       - '8080:8080'
+      - '4718:4718/udp'
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"    
     networks:
