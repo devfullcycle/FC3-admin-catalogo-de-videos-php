@@ -27,6 +27,7 @@ services:
       - elasticsearch
     ports:
       - '9600:9600'
+      - '8080:8080'
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"    
     networks:
