@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
+        "laravel/octane": "^1.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "php-amqplib/php-amqplib": "^3.2",
