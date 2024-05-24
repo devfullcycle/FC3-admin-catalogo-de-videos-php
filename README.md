@@ -1,15 +1,26 @@
+<center>
+  <p align="center">
+    <img src="https://user-images.githubusercontent.com/20674439/158480514-a529b310-bc19-46a5-ac95-fddcfa4776ee.png" width="150"/>&nbsp;
+    <img src="https://icon-library.com/images/php-icon/php-icon-8.jpg"  width="150" />
+  </p>  
+  <h1 align="center">🚀 Microsserviço: Catálogo de Vídeos com PHP</h1>
+  <p align="center">
+    Microsserviço Catálogo de Vídeos com PHP/Laravel <br />
+    Projeto com TDD, Clean Arch, DDD e etc;
+  </p>
+</center>
 
-# Laravel 9.x - Quick Start (Laravel 9.x + Docker)
 
-## Rodar o Laravel
+
+## Rodar o Projeto
 
 Clone Repositório
 ```sh
-git clone https://github.com/devfullcycle/FC3-admin-catalogo-de-videos-php.git laravel9
+git clone https://github.com/devfullcycle/FC3-admin-catalogo-de-videos-php.git microservice-catalog
 ```
 
 ```sh
-cd laravel9/
+cd microservice-catalog/
 ```
 
 Remova o versionamento (opcional)
